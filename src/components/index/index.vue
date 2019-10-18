@@ -1,5 +1,6 @@
 <template>
     <div id='index'>
+        <p>asdasdasd</p>
         <div id='box' class='banner'>
             <div class='bannerTitle'>首页</div>
         </div>
