@@ -1,5 +1,5 @@
 <template>
-    <div id='index'>
+    <!-- <div id='index'>
         <p>asdasdasd</p>
         <div id='box' class='banner'>
             <div class='bannerTitle'>首页</div>
@@ -59,6 +59,37 @@
             </div>
         </div>
         <div class="hold"></div>
+    </div> -->
+    <div id="index">
+        <div class="shoptitle">
+            <h2>{{title}}</h2>
+        </div>
+        <div class="shopimg">
+            <img src="../../assets/shopimg_index/banner.png" alt="BAT商城">
+        </div>
+        <div class="shopmore">
+            <div class="notice">
+                <img src="../../assets/shopimg_index/tz.png" alt="">
+                <p>{{bannerAd}}</p>
+            </div>
+            <div class="more">
+                <img src="../../assets/shopimg_index/shopmore.png" alt="">
+            </div>
+        </div>
+        <div class="shoplist">
+            <div class="lsit" v-for="item of commodity" :key="item.id" @click="listShop(item)">
+                <div class="listimg">
+                    <img v-bind:src="item.imgsrc" alt="">
+                    <!-- <img src="../../assets/shopimg_index/kuangji.png" alt=""> -->
+                </div>
+                <div class="listcontent">
+                    <h3 class="name">{{item.name}}</h3>
+                    <p class="jianjie">{{item.jianjie}}</p>
+                    <div class="jifen">积分：
+                        <span>{{item.jifen}}</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -70,68 +101,14 @@ import text from '../text'
 export default {
     data () {
         return {
-            active: 0,
-            text: '',
-            userList: [
-                {
-                    to: '/earnings',
-                    icon: './static/images/index/earnings.png',
-                    title: '我的收益'
-                },
-                {
-                    to: '/wallet',
-                    icon: './static/images/index/wallet.png',
-                    title: '我的钱包'
-                },
-                {
-                    to: '/inviteFriends',
-                    icon: './static/images/index/invite.png',
-                    title: '邀请好友'
-                },
-                {
-                    to: '/contactUs',
-                    icon: './static/images/index/connection.png',
-                    title: '联系我们'
-                }
+            title: 'BAT商城',
+            bannerAd: '我是公告我是公告我是公告我是公告',
+            commodity: [
+                {id:0, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
+                {id:1, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
+                {id:2, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
+                {id:3, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')}
             ]
-            ,
-            List: [
-                {
-                    icon: './static/images/index/business.png',
-                    text: '商业信息'
-                },
-                {
-                    icon: './static/images/index/live.png',
-                    text: '草根直播'
-                },
-                {
-                    icon: './static/images/index/game.png',
-                    text: '游戏世界'
-                },
-                {
-                    icon: './static/images/index/lottery.png',
-                    text: '幸运博彩'
-                },
-                {
-                    icon: './static/images/index/travel.png',
-                    text: '旅游信息'
-                },
-                {
-                    icon: './static/images/index/chat.png',
-                    text: '交友聊天'
-                },
-                {
-                    icon: './static/images/index/dial.png',
-                    text: '转盘抽奖',
-                    to: 'turntable'
-                },
-                {
-                    icon: './static/images/index/moreB.png',
-                    text: '更多'
-                }
-            ],
-            classList: [],
-            rateObj: {},
         }
     },
     component: {
@@ -216,6 +193,14 @@ export default {
         })
     },
     methods : {
+        listShop (item) {
+            this.$router.push({
+                path: '/indexShop',
+                query:{
+                    item: item
+                }
+            })
+        },
         message (obj) {
             if(obj.to){
                 let  status = this.$cookies.get('status')
@@ -308,9 +293,95 @@ export default {
 </style>
 <style lang="less" scoped>
 #index{
-    width: 100%;
+width: 100%;
     height: 100%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    background: rgb(11, 12, 33);
+    .shoptitle{
+        color: #ffffff
+    }
+    .shopmore{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .notice{
+            display: flex;
+            height: 20px;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            color: #eee;
+            width: 65%;
+            background: #121e4d;
+            border-radius: 30px;
+            font-size: 14px;
+            p{
+             overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;               
+            }
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .more{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: #a04ce2;
+            width: 70px;
+            height: 40px;;
+        }
+    }
+    .shoplist{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        letter-spacing:1px;
+        .lsit{
+            box-sizing: border-box;
+            height: 200px;
+            width: 45%;
+            margin-top: 10px;
+            padding-left: 10px;
+            background: #212243;
+            .listimg{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 50%;
+            }
+            .name{
+                color:#c4c5cd;
+                font-size: 16px;
+                margin: 5px;
+            }
+            .jianjie{
+                color: #bec6e4;
+                margin: 5px;
+            }
+            .jifen{
+                margin: 5px;
+                color: #FB4B48;
+                span{
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
 .hold{
     background: #f8f8f8;

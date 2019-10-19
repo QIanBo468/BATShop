@@ -6,6 +6,9 @@ import authentication from '@/components/authentication'
 import result from '@/components/result'
 import register from '@/components/register'
 import index from '@/components/index'
+import indexShop from '@/components/index/indexShop'
+import indexBuy from '@/components/index/indexBuy'
+import indexSite from '@/components/index/indexSite'
 import tabbarBox from '@/components/tabbarBox'
 // import text from '@/components/text'
 import notice from '@/components/index/notice'
@@ -166,6 +169,21 @@ export default new Router({
     {
       path: '/',
       redirect: '/index'
+    },
+    {
+      path: '/indexShop',
+      name: 'indexShop',
+      component: indexShop
+    },
+    {
+      path: '/indexBuy',
+      name: 'indexBuy',
+      component: indexBuy
+    },
+    { 
+      path: '/indexSite',
+      name: 'indexSite',
+      component: indexSite
     },
     {
       path: '/index',

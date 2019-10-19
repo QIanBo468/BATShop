@@ -11,21 +11,21 @@
                 >
             </van-tabbar-item>
             <van-tabbar-item  to='/mall'>
-                <span class='red'>矿机商城</span>
+                <span class='red'>资产</span>
                 <img
                 slot="icon"
                 slot-scope="props"
                 :src="props.active ? mall.active : mall.normal"
                 >
             </van-tabbar-item>
-            <van-tabbar-item to="/transaction" >
+            <!-- <van-tabbar-item to="/transaction" >
                 <span class='red'>交易中心</span>
                 <img
                 slot="icon"
                 slot-scope="props"
                 :src="props.active ? deal.active : deal.normal"
                 >
-            </van-tabbar-item>
+            </van-tabbar-item> -->
             <van-tabbar-item to='/myIndex'>
                 <span class='red'>我的</span>
                 <img
@@ -43,8 +43,8 @@ export default {
         return {
             active: 0,
             icon: {
-                active: './static/images/index/index_active.png',
-                normal: './static/images/index/index.png',
+                active: './static/images/index/dating@3x.png/',
+                normal: './static/images/index/dating-s@3x.png',
             },
             mall: {
                 active: './static/images/index/kuangji_active.png',
@@ -79,10 +79,18 @@ export default {
         display: flex;
         flex-direction: column;
     }
+    /deep/.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+        border-width: 0px;
+    }
+    .van-tabbar-item{
+        background: #0b0c21;
+        border: 1px solid #0b0c21;
+        // border-width: 0px;
+    }
     .van-tabbar-item--active {
 
         .red{
-            color: #F84D4D
+            color: #358eea
         }
     }
 </style>
