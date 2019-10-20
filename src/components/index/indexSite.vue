@@ -150,7 +150,8 @@ export default {
     bottom: 10px;
     width: 95%;
     box-sizing: border-box;
-    background: #201cfa;
+    // background: #201cfa;
+    background-image: linear-gradient(90deg,#494efe, #0b02f8);
     height: 50px;
     border-radius: 8px;
     font-size: 16px;

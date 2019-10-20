@@ -166,6 +166,10 @@ export default new Router({
       name: 'extractRecord',
       component: extractRecord
     },
+    // {
+    //   path: '/',
+    //   redirect: '/register'
+    // },
     {
       path: '/',
       redirect: '/index'

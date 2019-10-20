@@ -204,7 +204,8 @@ export default {
       width: 100%;
       height: 40px;
       margin-top: 10px;
-      background: #201cfa;
+      // background: #201cfa;
+      background-image: linear-gradient(90deg,#494efe, #0b02f8);
       font-size: 18px;
       text-align: center;
       line-height: 40px;

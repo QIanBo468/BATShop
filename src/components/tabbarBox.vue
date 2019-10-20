@@ -47,16 +47,16 @@ export default {
                 normal: './static/images/index/dating-s@3x.png',
             },
             mall: {
-                active: './static/images/index/kuangji_active.png',
-                normal: './static/images/index/kuangji.png',
+                active: './static/images/index/huobi@3x.png',
+                normal: './static/images/index/huobi@3xs.png',
             },
-            deal: {
-                active: './static/images/index/deal_active.png',
-                normal: './static/images/index/deal.png',
-            },
+            // deal: {
+            //     active: './static/images/index/deal_active.png',
+            //     normal: './static/images/index/deal.png',
+            // },
             user: {
-                active: './static/images/index/user_active.png',
-                normal: './static/images/index/user_ico.png',
+                active: './static/images/index/more@3xs.png',
+                normal: './static/images/index/more@3x.png',
             }
         }
     },

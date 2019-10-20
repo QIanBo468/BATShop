@@ -1,7 +1,8 @@
 <template>
     <div id='ofc'>
+        <div class="navstatis">
          <van-nav-bar
-            title="ofc"
+            title="可用积分"
             left-arrow
             :border="false"
             @click-left="onClickLeft"
@@ -9,6 +10,7 @@
         <div class='statis'>
             <div>当前余额</div>
             <div>{{ofc.creditValue}}</div>
+        </div>
         </div>
         <div class='deposit' style="height: 40px;diplay:flex;">
             <div @click="skip">
@@ -19,13 +21,13 @@
                 <img src="../../../static/images/index/extract.png" alt="">
                 <span>提现</span>  
             </div> -->
-            <div @click='$router.push({path: "/transfer",query:{type:"ofc"}})'>
+            <!-- <div @click='$router.push({path: "/transfer",query:{type:"ofc"}})'>
                 <img src="../../../static/images/index/transfer.png" alt="">
                 <span>转账</span>  
-            </div>
+            </div> -->
         </div>
         <van-tabs v-model="active" @change="acChange">
-            <van-tab title="所有明细">
+            <van-tab title="全部">
                 <van-list
                 v-model="loading"
                 :finished="finished"
@@ -113,7 +115,7 @@ export default {
     },
     methods: {
         onClickLeft () {
-            this.$router.push('/wallet')
+            this.$router.go(-1)
         },
         skip () {
             this.$router.push({path:'/exchange',query: {'type': 1}})
@@ -165,8 +167,14 @@ export default {
 </script>
 <style lang="less">
     #ofc{
+        .navstatis{
+            width: 100%;
+            background:linear-gradient(180deg,#815EFD 0%,#B775FF 100%);
+            z-index: 5;
+            margin-bottom: 00px;
+        }
         .van-nav-bar{
-            background:linear-gradient(180deg,#FFCA31 0%,#FBA328 100%);
+            background: transparent;
             .van-icon {
                 color: #fff;
             }
@@ -174,14 +182,28 @@ export default {
                 color: #fff;
             }
         }
+        .van-tabs__nav{
+            background: #1D1C3B;
+            margin-bottom: 5px !important;
+            border: none;
+        }
+        .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+            border-width: 0;
+        }
+         .van-tabs__content{
+            background: #1D1C3B !important;
+            margin-top: 10px;
+        }
         .van-tabs__line{
-            width: 34px!important;
-            border-radius:1px;
+            background:linear-gradient(180deg,#494EFE 0%,#0C04F8 100%);
+            width: 25px!important;
+            height: 5px;
+            border-radius:5px;
         }
         .van-tab--active{
             .van-ellipsis{
                 font-size: 14px;
-                color: #F84D4D!important
+                color: #ffffff!important
             }
         }
         .van-ellipsis{
@@ -196,11 +218,17 @@ export default {
 #ofc{
     width: 100%;
     height: 100%;
-    background: #F8F8F8
+    background: #000;
+}
+// /deep/.van-tabs{
+//     background: #1D1C3B;
+// }
+.van-loading .van-loading--circular{
+    background: #1D1C3B;
 }
 .statis{
     height: 107px;
-    background:linear-gradient(180deg,#FBA328 0%, #F76B1C 100%);
+    // background:linear-gradient(180deg,#FBA328 0%, #F76B1C 100%);
     padding: 30px  23px;
     box-sizing: border-box;
     color: #fff;
@@ -221,7 +249,7 @@ export default {
     margin: 0 auto;
     height: 50px;
     display: flex;
-    background: #fff;
+    background: #1D1C3B;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
@@ -258,7 +286,8 @@ export default {
     background: #fff;
     height: 40px;
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
+    padding-left: 30px;
     align-items: center;
     margin-bottom: 10px;
     div{

@@ -222,7 +222,8 @@ export default {
       flex: 3;
       text-align: center;
       line-height: 40px;
-      background: #201cfa;
+      // background: #201cfa;
+      background-image: linear-gradient(90deg,#494efe, #0b02f8);
     }
   }
 }

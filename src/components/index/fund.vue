@@ -1,7 +1,8 @@
 <template>
     <div id='fund'>
+        <div class="navstatis">
          <van-nav-bar
-            title="爱心基金"
+            title="消费积分"
             left-arrow
             :border="false"
             @click-left="onClickLeft"
@@ -9,12 +10,13 @@
         <div class='statis'>
             <div class='statisTitle'>当前余额</div>
             <div class='transferBox'>
-                <div>{{live.creditValue}}</div>
-                <div @click='$router.push({path: "/transfer",query:{type:"LoveFund"}})'>转账</div>
+                <!-- <div>{{live.creditValue}}</div>
+                <div @click='$router.push({path: "/transfer",query:{type:"LoveFund"}})'>转账</div> -->
             </div>
         </div>
+        </div>
         <van-tabs v-model="active" @change="acChange">
-            <van-tab title="所有明细">
+            <van-tab title="全部">
                 <van-list
                 v-model="loading"
                 :finished="finished"
@@ -87,7 +89,7 @@ export default {
     },
     methods: {
         onClickLeft () {
-            this.$router.push('/wallet')
+            this.$router.go(-1)
         },
         acChange(){
             this.finished = false
@@ -136,8 +138,14 @@ export default {
 </script>
 <style lang="less">
     #fund{
+        .navstatis{
+            width: 100%;
+            background:linear-gradient(180deg,#FE7474 0%,#FDAA73 100%);
+            z-index: 5;
+            margin-bottom: 20px;
+        }
         .van-nav-bar{
-            background:linear-gradient(180deg,#FD5966 0%,#FA4A58 100%);
+            background: transparent;
             .van-icon {
                 color: #fff;
             }
@@ -145,14 +153,28 @@ export default {
                 color: #fff;
             }
         }
+        .van-tabs__nav{
+            background: #1D1C3B;
+            margin-bottom: 10px !important;
+            border: none;
+        }
+        .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+            border-width: 0;
+        }
+         .van-tabs__content{
+            background: #1D1C3B !important;
+            margin-top: 10px;
+        }
         .van-tabs__line{
-            width: 34px!important;
-            border-radius:1px;
+           background:linear-gradient(180deg,#494EFE 0%,#0C04F8 100%);
+            width: 25px!important;
+            height: 5px;
+            border-radius:5px;
         }
         .van-tab--active{
             .van-ellipsis{
                 font-size: 14px;
-                color: #F84D4D!important
+                color: #ffffff!important
             }
         }
         .van-ellipsis{
@@ -167,11 +189,11 @@ export default {
 #fund{
     width: 100%;
     height: 100%;
-    background: #F8F8F8
+    background: #000;
 }
 .statis{
     height: 107px;
-    background:linear-gradient(180deg,#FA4A58 0%, #F42D3D 100%);
+    // background:linear-gradient(180deg,#FA4A58 0%, #F42D3D 100%);
     padding: 30px  23px;
     box-sizing: border-box;
     color: #fff;
