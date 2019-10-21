@@ -7,6 +7,8 @@
                 <img
                 slot="icon"
                 slot-scope="props"
+                width="24px"
+                height="24px"
                 :src="props.active ? icon.active : icon.normal"
                 >
             </van-tabbar-item>
@@ -15,6 +17,8 @@
                 <img
                 slot="icon"
                 slot-scope="props"
+                width="24px"
+                height="24px"
                 :src="props.active ? mall.active : mall.normal"
                 >
             </van-tabbar-item>
@@ -31,6 +35,8 @@
                 <img
                 slot="icon"
                 slot-scope="props"
+                width="24px"
+                height="24px"
                 :src="props.active ? user.active : user.normal"
                 >
             </van-tabbar-item>
@@ -90,7 +96,8 @@ export default {
     .van-tabbar-item--active {
 
         .red{
-            color: #358eea
+            color: #358eea;
+            font-size: 11px;
         }
     }
 </style>

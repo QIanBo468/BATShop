@@ -9,7 +9,7 @@
         />
         <div class='box'>
             <div class='usdt'>
-                <img src="../../../static/images/index/ofc.png" alt="" v-if='$route.query.type == 1'>
+                <img src="../../../static/images/index/jf@3x.png" alt="" v-if='$route.query.type == 1'>
                 <img src="../../../static/images/index/usdt.png"  v-else>
                 {{title}}
             </div>
@@ -22,24 +22,24 @@
                 {{rules.total_usdt}}
             </div>
             <div class='title'>
+                <div class="g"></div>
                 兑换数量
             </div>
             <!-- <InputImg  :placeholder='placeNum' @changeInp='changeVal' :value='user' > -->
             <div class='inputBox'>
                 <input type="number" v-model="num" placeholder="请输入兑换数量">
-
             </div>
             <div class='remarks'>
                 备注：usdt兑换ofc比例为1 ：{{rules.toUsdt}}
             </div>
-            <div class='cell'>
+            <!-- <div class='cell'>
                 <div>手续费</div>
                 <div class='overText'>{{aNum[0]}}</div>
             </div>
             <div class='cell'>
                 <div>爱心基金</div>
                 <div class='overText'>{{aNum[1]}}</div>
-            </div>
+            </div> -->
             <div class="cell">
                 <div>实际到账</div>
                 <div class='overText'>{{aNum[2]}}</div>
@@ -72,7 +72,7 @@ export default {
             num: '',
             rules: '',
             password: '',
-            title: 'ofc'
+            title: '可用积分'
         }
     },
     created () {
@@ -162,6 +162,7 @@ export default {
         height: 100%;
         display: flex;
         flex-direction: column;
+        background: #000;
         overflow: hidden;
         .box{
             flex: 1;
@@ -169,30 +170,43 @@ export default {
             overflow-y: auto;
             padding: 0 16px;
             margin: 0 auto 20px;
-            border-top: 10px solid #f8f8f8;
+            // border-top: 10px solid #f8f8f8;
             .title{
                 font-size: 14px;
-                color: #666;
+                color: #fff;
                 height: 20px;
                 line-height: 20px;
                 margin:  10px 0;
+                display: flex;
+                .g{
+                    height: 20px;
+                    // line-height: 20px;
+                    width: 5px;
+                    background:linear-gradient(180deg,#494EFE 0%,#0C04F8 100%);
+                    margin-right: 10px;
+                    border-radius: 8px;
+                }
             }
             .inputBox{
                 display: flex;
-                border: 1px solid #D8D8D8;
+                background: #1D1C3B;
+                // border: 1px solid #D8D8D8;
                 padding: 8px;
                 width: 343px;
-                height: 40px;
+                height: 50px;
                 margin: 0 auto;
                 box-sizing: border-box;
                 justify-content: space-between;
                 border-radius:4px;
+                align-items: center;
                 font-size: 14px;
                 input{
                     // height: 20px;
                     flex: 1;
                     border: 0;
                     font-size: 14px;
+                    background: #1D1C3B;
+                    color: #fff;
                 }
                 img{
                     width: 17px;
@@ -205,18 +219,18 @@ export default {
                 display: flex;
                 justify-content: center;
                 font-size: 22px;
-                color: #F84D4D;
+                color: #835FFE;
                 align-items: center;
                 img{
                     margin-right: 10px;
-                    height: 22px;
-                    width: 22px;
+                    height: 27px;
+                    width: 27px;
                 }
             }
             .remarks{
                 font-size: 12px;
                 margin: 5px 0 40px;
-                color: #666;
+                color: #DEE7FF;
             }
             .money{
                 text-align: center;
@@ -231,7 +245,7 @@ export default {
             .cell{
                 height: 18px;
                 line-height: 18px;
-                color: #666;
+                color: #fff;
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 10px;
@@ -244,7 +258,9 @@ export default {
                 }
             }
             .btn{
-                margin-top: 60px;
+                // margin-top: 60px;
+                position: fixed;
+                bottom: 10px;
                 text-align: center;
                 line-height: 40px;
                 font-size: 16px;
@@ -252,14 +268,38 @@ export default {
                 height: 2.75rem;
                 background: red;
                 margin: 0 auto;
-                background: -webkit-gradient(linear,left top,left bottom,from(#fd5966),to(#e71122));
-                background: linear-gradient(180deg,#fd5966,#e71122);
-                border-radius: 1.375rem;
+                background:linear-gradient(90deg,#494EFE 0%,#0C04F8 100%);
+                // background: linear-gradient(180deg,#fd5966,#e71122);
+                border-radius: 0.5rem;
                 color: #fff;
             }
             .red{
                 color: #F84D4D;
             }
+        }
+         /deep/.van-cell__value{
+            background: #1D1C3B;
+            
+        }
+        /deep/.van-field__control{
+            color: #f8f8f8;
+        }
+        .van-nav-bar{
+            background: #000;
+            // background:linear-gradient(180deg,#3FCFFE 0%,#39B2F8 100%);
+            // background: #fff;
+            .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
+        }
+        .van-hairline--bottom::after{
+            border: none;
         }
     }
 </style>

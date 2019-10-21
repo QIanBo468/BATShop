@@ -26,6 +26,7 @@
                     v-validate="'required'"
                     v-model='fromObj.captcha'
                     :error="errors.has('captcha')"
+                    autocomplete="off"
                 >
                 <template slot='left-icon'>
                     <img class='inputIcon' src='../../static/images/index/yzm@2x.png'/>
@@ -137,7 +138,7 @@ export default {
                 "module":"Account",
                 "interface":"1003",
                 "data":
-                    {"account": this.fromObj.account,}
+                {"account": this.fromObj.account,}
                 }).then(res => {
                     Toast(res.message)
                 if(res.code == 0){

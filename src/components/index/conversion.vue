@@ -15,7 +15,7 @@
             @load="onLoad"
             >
                 <div class='record' v-for='(item, index) in list' :key='index'>
-                    <div class='status'>兑换成功</div>
+                    <!-- <div class='status'>兑换成功</div> -->
                     <ul>
                         <li>
                             <div>兑换数量</div>
@@ -25,14 +25,14 @@
                             <div>提交时间</div>
                             <div>{{item.createdAt}}</div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <div>爱心基金</div>
                             <div>{{item.loveFund}}</div>
                         </li>
                         <li>
                             <div>手续费</div>
                             <div>{{item.fee}}</div>
-                        </li>
+                        </li> -->
                         <li>
                             <div>到账数量</div>
                             <div class='red'>{{item.final}}</div>
@@ -97,7 +97,7 @@ export default {
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: #f8f8f8;
+        background: #000;
         .box{
             padding: 16px;
             overflow: scroll;
@@ -121,6 +121,7 @@ export default {
                     font-size: 12px;
                     display: flex;
                     margin-bottom: 5px;
+                    color: #fff;
                     div:first-child{
                         width: 60px;
                         color: #666666;
@@ -134,6 +135,23 @@ export default {
                     margin-bottom: 0px;
                 }
             }
+        }
+            .van-nav-bar{
+            background: #000;
+            // background:linear-gradient(180deg,#3FCFFE 0%,#39B2F8 100%);
+            // background: #fff;
+            .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
+        }
+        .van-hairline--bottom::after{
+            border: none;
         }
     }
 </style>

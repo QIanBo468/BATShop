@@ -69,26 +69,27 @@ export default {
 </script>
 <style scoped>
 .safe_center {
-  background: #f8f8f8;
+  background: #0D0900;
   height: 100vh;
 }
 .fix_pass {
   padding: 5px;
-  background: #fff;
+  background: #1D1C3B;
   margin-top: 10px;
+
 }
 .login_pass {
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #f5f5f5;
+  /* border-bottom: 1px solid #f5f5f5; */
 }
 .login_pass:last-child {
   border: none;
 }
 .login_pass > span {
-  color: #666666;
+  color: #fff;
   font-size: 14px;
 }
 .login_pass > img {
@@ -100,7 +101,7 @@ export default {
   align-items: center;
 }
 .huancun > span {
-  color: #333333;
+  color: #fff;
   font-size: 14px;
   margin-right: 5px;
   font-weight: 400;
@@ -109,4 +110,30 @@ export default {
   width: 9px;
   height: 14px;
 }
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width:0px 0px !important;
+}
+.van-cell__value{
+            background: #0D0900;
+            
+        }
+.van-field__control{
+            color: #f8f8f8;
+        }
+      
+        .van-hairline--bottom::after{
+            border: none;
+        }
+          .van-nav-bar{
+            background: #0D0900;
+        }
+           .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
 </style>

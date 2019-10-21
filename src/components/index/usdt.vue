@@ -25,7 +25,7 @@
                 <img src="../../../static/images/index/exchange.png" alt="">
                 <span>兑换</span>   
             </div> -->
-            <div @click='$router.push({path: "/transfer",query:{type:"usdt"}})'>
+            <div @click='$router.push({path: "/transfer",query:{type:"BAT"}})'>
                 <img src="../../../static/images/index/transfer.png" alt="">
                 <span>转出</span>  
             </div>
@@ -117,7 +117,7 @@ export default {
     },
     methods: {
         onClickLeft () {
-            this.$router.go(-1)
+            this.$router.push({path:'mall'})
         },
         acChange(){
             this.finished = false

@@ -18,26 +18,26 @@
                     <div v-if='item.status == 1' class='status'>转账成功</div>
                     <div v-if='item.status == 2' class='status red'>转账失败</div>
                     <ul>
-                        <li>
+                        <!-- <li>
                             <div>会员ID</div>
                             <div>{{item.toUserId}}</div>
-                        </li>
+                        </li> -->
                         <li>
                             <div>提交时间</div>
                             <div>{{item.createdAt}}</div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <div>钱包类型</div>
                             <div>{{item.creditName}}</div>
-                        </li>
-                        <li v-if='type == "ofc"'>
+                        </li> -->
+                        <!-- <li v-if='type == "ofc"'>
                             <div>手续费</div>
                             <div>{{item.fee}}</div>
                         </li>
                         <li v-if='type == "ofc"'>
                             <div>爱心基金</div>
                             <div>{{item.love}}</div>
-                        </li>
+                        </li> -->
                         <li>
                             <div>转账数量</div>
                             <div class='red'>{{item.money}}</div>
@@ -63,8 +63,9 @@ export default {
         }
     },
     created() {
-        var type = this.$route.query.type,status = '3102'
-        if(type == 'usdt'){
+        var type = this.$route.query.type,
+        status = '3102'
+        if(type == 'BAT'){
             status = '3101'
         }else if(type == 'ofc'){
             status = '3100'
@@ -104,7 +105,7 @@ export default {
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: #f8f8f8;
+        background: #000;
         .box{
             padding: 16px;
             overflow: scroll;
@@ -128,6 +129,7 @@ export default {
                     font-size: 12px;
                     display: flex;
                     margin-bottom: 5px;
+                    color: #fff;
                     div:first-child{
                         width: 60px;
                         color: #666666;
@@ -141,6 +143,23 @@ export default {
                     margin-bottom: 0px;
                 }
             }
+        }
+                .van-nav-bar{
+            background: #000;
+            // background:linear-gradient(180deg,#3FCFFE 0%,#39B2F8 100%);
+            // background: #fff;
+            .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
+        }
+        .van-hairline--bottom::after{
+            border: none;
         }
     }
 </style>

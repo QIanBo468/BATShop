@@ -70,16 +70,19 @@ export default {
   }
 }
 </script>
-<style scoped>
+
+
+
+<style  scoped>
 .fix_login {
-  background: #f5f5f5;
+  background: #0D0900;
   min-height: 100vh;
   height: auto;
 }
 .login_list {
   margin-top: 10px;
 }
-.fix_login >>> .van-field__label {
+ .fix_login >>> .van-field__label {
   width: 149px;
 }
 .intrd {
@@ -88,20 +91,68 @@ export default {
   font-size: 10px;
 }
 .sure {
-  padding: 15px;
+  /* padding: 15px; */
   /* position: fixed;
   bottom: 260px;
   left: 0;
   right: 0; */
-   margin-top: 55px;
+   /* margin-top: 55px; */
+   width: 100%;
+   height: 45px;
+   display: flex;
+   justify-content: center;
 }
 .sure button {
-  background: #f45c68;
-  width: 100%;
+  background-image: linear-gradient(90deg,#494efe, #0900F8);
+  width: 90%;
   border: none;
   padding: 15px;
   color: #fff;
   font-size: 16px;
-  border-radius: 23px;
+  border-radius: 8px;
+  position: fixed;
+  bottom: 15px;
+}
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width:0px 0px !important;
+}
+.van-cell:not(:last-child)::after{
+  border: none;
+}
+.van-cell{
+   color: #fff;
+  background: #1D1C3B;
+}
+
+.van-cell__value{
+            background: #f8f8f8;
+        }
+input{
+  color: #f8f8f8 !important;
+}
+.fix_login>>>.van-field__control{
+  color: #f8f8f8 !important;
+}
+      
+        .van-hairline--bottom::after{
+            border: none;
+        }
+          .van-nav-bar{
+            background: #0D0900;
+        }
+           .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
+</style>
+
+<style lang="less" scope>
+  /deep/.van-field__control{
+  color: #f8f8f8 !important;
 }
 </style>

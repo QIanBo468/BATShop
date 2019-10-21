@@ -53,7 +53,7 @@ export default {
 </script>
 <style scoped>
 .fix_deal {
-  background: #f5f5f5;
+  background: #0D0900;
   min-height: 100vh;
   height: auto;
 }
@@ -64,20 +64,61 @@ export default {
   width: 149px;
 }
 .sure {
-  padding: 15px;
-  margin-top: 55px;
+    display: flex;
+   justify-content: center;
+   width: 100%;
+   height: 45px;
   /* position: fixed;
   bottom: 260px;
   left: 0;
   right: 0; */
 }
 .sure button {
-  background: #f45c68;
-  width: 100%;
+  background-image: linear-gradient(90deg,#494efe, #0900F8);
+  width: 90%;
   border: none;
   padding: 15px;
   color: #fff;
   font-size: 16px;
-  border-radius: 23px;
+  border-radius: 8px;
+  position: fixed;
+  bottom: 15px;
 }
+.fix_deal>>>.van-field__control{
+  color: #f8f8f8 !important;
+}
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width:0px 0px !important;
+}
+.van-cell:not(:last-child)::after{
+  border: none;
+}
+.van-cell{
+   color: #fff;
+  background: #1D1C3B;
+}
+
+.van-cell__value{
+            background: #f8f8f8;
+        }
+input{
+  color: #f8f8f8 !important;
+}
+
+      
+        .van-hairline--bottom::after{
+            border: none;
+        }
+          .van-nav-bar{
+            background: #0D0900;
+        }
+           .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
 </style>

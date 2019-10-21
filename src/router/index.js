@@ -184,7 +184,7 @@ export default new Router({
       name: 'indexBuy',
       component: indexBuy
     },
-    { 
+    {
       path: '/indexSite',
       name: 'indexSite',
       component: indexSite
@@ -227,7 +227,7 @@ export default new Router({
       name: 'transmarket',
       component: resolve => require(['@/components/transaction/tran_market'], resolve),
       meta: {
-        title: '交易市场', 
+        title: '交易市场'
       }
     },
 
