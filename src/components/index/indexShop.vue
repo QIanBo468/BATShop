@@ -27,6 +27,7 @@
             <img :src="xqtusrc" alt="">
           </div>
         </div>
+        <div class="clf"></div>
         <div class="buy" @click="indexbuy">购买</div>
   </div>
 </template>
@@ -197,6 +198,10 @@ export default {
           width: 100%;
         }
       }
+    }
+    .clf{
+      width: 100%;
+      height: 40px;;
     }
     .buy{
       position: fixed;

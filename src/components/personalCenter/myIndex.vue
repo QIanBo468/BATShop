@@ -43,7 +43,7 @@
         <img class="arrow"  src="../../../static/images/index/in@3x.png" alt />
       </router-link>
 
-      <router-link class="list" to="my_recommend">
+      <router-link class="list" to="inviteFriends">
         <div class="my_first">
           <img src="../../../static/images/index/yaoqing@3x.png" alt />
           <p>邀请好友</p>

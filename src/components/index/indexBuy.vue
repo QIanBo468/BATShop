@@ -91,6 +91,7 @@ export default {
   height: 100%;
   box-sizing: border-box;
   padding:0 10px;
+  overflow-y: auto;
   // padding-right: 20px;
   // padding-top: 0;
   // padding-bottom: 0;

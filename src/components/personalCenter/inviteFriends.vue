@@ -16,7 +16,8 @@
           <button @click="copy(num)">复制</button>
         </div>
         <div class="bottom">
-          <img :src="qrcode" alt />
+          <!-- <img :src="qrcode" alt /> -->
+          <qrCode></qrCode>
           <p>长按二维码识别</p>
           <!-- <button @click="show=true">邀请好友</button> -->
         </div>
@@ -57,6 +58,9 @@
 </template>
 
 <script>
+
+import qrCode from '../QRCode'
+
 export default {
   data () {
     return {
@@ -65,6 +69,9 @@ export default {
       qrcode: '',
       info: ''
     }
+  },
+  components: {
+    qrCode
   },
   methods: {
     copy (num) {
