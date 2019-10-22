@@ -114,7 +114,8 @@ export default {
   width: 100%;
   min-height: 100vh;
   height: auto;
-  background: linear-gradient(180deg, #fd5966 0%, #f42d3d 100%);
+  /* background: linear-gradient(180deg, #fd5966 0%, #f42d3d 100%); */
+  background: #0D0900;
   color: #fff;
   text-align: center;
 }
@@ -135,14 +136,18 @@ export default {
 .con {
   width: 270px;
   height: 420px;
-  background: url(../../assets/img/yaoqing_bg.png) no-repeat;
+  /* background: url(../../assets/img/yaoqing_bg.png) no-repeat; */
+  background: #fff;
+  border-radius: 8px;
   background-size: 100% 100%;
   margin: 20px auto 0;
-  color: #f84d4d;
+  color: #2D65FF;
+  padding:0 25px;
 }
 .con .top {
   height: 166px;
   padding-top: 30px;
+  border-bottom: 1px dashed #BEC6E4;
 }
 .con .top p {
   font-size: 14px;
@@ -159,7 +164,9 @@ export default {
 .main button {
   width: 80px;
   height: 28px;
-  background: url(../../assets/img/small_btn.png) no-repeat;
+  background: linear-gradient(180deg ,#9AB5FF 0%, #2D65FF 100%);
+  border-radius: 8px;
+  /* background: url(../../assets/img/small_btn.png) no-repeat; */
   background-size: 100% 100%;
   font-size: 12px;
   display: inline-block;
@@ -203,4 +210,38 @@ export default {
   font-size: 18px;
   color: #333;
 }
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width:0px 0px !important;
+}
+.van-cell:not(:last-child)::after{
+  border: none;
+}
+.van-cell{
+   color: #fff;
+  background: #1D1C3B;
+}
+
+.van-cell__value{
+            background: #f8f8f8;
+        }
+input{
+  color: #f8f8f8 !important;
+}
+
+      
+        .van-hairline--bottom::after{
+            border: none;
+        }
+          .van-nav-bar{
+            background: #0D0900;
+        }
+           .van-icon {
+                color: #fff;
+            }
+            .van-nav-bar__title{
+                color: #fff;
+            }
+            .van-nav-bar__text{
+                color: #fff;
+            }
 </style>

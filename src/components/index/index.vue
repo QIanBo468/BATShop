@@ -293,7 +293,7 @@ export default {
 </style>
 <style lang="less" scoped>
 #index{
-width: 100%;
+    width: 100%;
     height: 100%;
     overflow-y: auto;
     display: flex;
