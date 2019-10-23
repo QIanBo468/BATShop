@@ -22,6 +22,7 @@
                 </template>
                 </van-field>
                 <van-field
+                  style="color:#fff"
                     placeholder="请输入密码"
                     type="password"
                     v-validate="'required'"

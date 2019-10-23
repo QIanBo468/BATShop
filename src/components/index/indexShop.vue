@@ -6,12 +6,17 @@
       </div>
       <div class="zhanshi">
         <div class="zhanshitu">
-          <!-- <img :src="this.listShop.imgsrc" alt=""> -->
-          <img src="../../assets/shopimg_index/kuangji.png" alt="">
+
+          <van-swipe :autoplay="3000" style="width: 100%">
+            <van-swipe-item v-for="(image, index) in images" :key="index">
+              <img v-lazy="image" style="width: 100%;height: 100%" />
+            </van-swipe-item>
+          </van-swipe>
+
         </div>
-        <div class="sponsor">{{jieshao}}</div>
+        <div class="sponsor">{{this.listShop.title}}</div>
         <div class="jifen">积分：
-          <span>{{this.listShop.jifen}}</span></div>
+          <span>{{this.listShop.price}}</span></div>
         </div>
         <div class="purchase">
           <p>采购数量</p>
@@ -23,8 +28,8 @@
         </div>
         <div class="xiangqingtu">
           <div class="buyxq">详情描述</div>
-          <div class="xqimg">
-            <img :src="xqtusrc" alt="">
+          <div class="xqimg" v-html="this.listShop.detail">
+            <!--<img :src="xqtusrc" alt="">-->
           </div>
         </div>
         <div class="clf"></div>
@@ -33,18 +38,43 @@
 </template>
 
 <script>
+  import Vue from 'vue';
+  import { Swipe, SwipeItem } from 'vant';
+  import { Lazyload } from 'vant';
+  Vue.use(Swipe).use(SwipeItem);
+  Vue.use(Lazyload);
 export default {
   data() {
     return {
       listShop: {},
+      orderShop:{},
+      images: [
+
+      ],
       jieshao: '这里是介绍这里是介绍这里是介绍这里是介绍这里是介绍这里是介绍',
       purchase: 1,
       xqtusrc: require('../../assets/shopimg_index/kuangji.png')
     }
   },
   created() {
-    this.listShop = this.$route.query.item
+    this.orderShop = this.$route.query.item
+    this.shopid = this.$route.query.item.id
     console.log(this.listShop)
+
+    this.$axios.fetchPost('/portal/SimpleShop',
+      {
+        source: "web",
+        version: "v1",
+        module: "Goods",
+        interface: "1001",
+        data: {id:this.shopid}
+      }).then(res => {
+      if(res.success){
+        this.listShop = res.data
+        this.images = res.data.slides
+      }
+    })
+
   },
   methods: {
     back () {
@@ -63,10 +93,8 @@ export default {
     },
     indexbuy () {
       const item = {
-        listShop: this.listShop,
-        jieshao: this.jieshao,
+        listShop: this.orderShop,
         purchase: this.purchase,
-        xqtusrc: this.xqtusrc
       }
       console.log(item)
       this.$router.push({
@@ -118,11 +146,11 @@ export default {
     }
     .zhanshi{
       width: 100%;
-      height: 45%;
+      height: 35%;
       .zhanshitu{
         background: #1d1e3d;
         width: 100%;
-        height: 60%;
+        height: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -193,7 +221,7 @@ export default {
       .xqimg{
         width: 100%;
         border-radius: 8px;
-        background: #ffffff;
+        //background: #ffffff;
         img{
           width: 100%;
         }

@@ -1,66 +1,5 @@
 <template>
-    <!-- <div id='index'>
-        <p>asdasdasd</p>
-        <div id='box' class='banner'>
-            <div class='bannerTitle'>首页</div>
-        </div>
-        <text ></text>
-        <van-grid :column-num="4" class='tabBox' :border='false' >
-            <van-grid-item
-                v-for="(value, index) in List"
-                :key="index"
-                @click='message(value)'
-            >
-            <van-image :src="value.icon" width="47px"/>
-                <div style="font-size: 12px;margin-top: 8px">{{value.text}}</div>
-            </van-grid-item>
-        </van-grid>
-        <van-notice-bar
-        :text="text"
-        left-icon="volume-o"
-        color="#111"
-        background="#fff">
-        <template slot='left-icon'>
-            <img class='imgIcon' src="../../../static/images/index/gonggao.png" alt="">
-        </template>
-        <template slot='right-icon'>
-            <img class='imgIcon' src="../../../static/images/index/more.png" alt="" @click='$router.push("/notice")'>
-        </template>
-        </van-notice-bar>
-        <div class="hold"></div>
-        <van-grid :column-num="2" class='connected' :border='false'>
-            <van-grid-item
-                v-for="(value, index) in userList"
-                :key="index"
-            >
-                <a @click="deal(value.to)" >
-            <div style="height:62px;display:flex;width: 112px;align-items: center;color: #111">
-                    <van-image :src="value.icon" width="50px" height="50px"/>
-                    <div style="margin-left: 10px;font-size: 13px">{{value.title}}</div>
-            </div>
-                </a>
-            </van-grid-item>
-        </van-grid>
-        <div class="hold"></div>
-        <div class="present">
-            <div class="title">ofc当前价格</div>
-            <div class='box_sm'>
-                <div class="list">
-                    <img src="../../../static/images/index/ofc.png" alt="">
-                    <span>1.00000000 ofc ≈ </span>
-                    <span class='red'> {{rateObj.CNY}} CNY</span>
-                </div>
-                <div class="list">
-                    <img src="../../../static/images/index/ofc.png" alt="">
-                    <span>1.00000000 ofc ≈ </span>
-                    <span class='red'>{{rateObj.USDT}} usdt</span>
-                </div>
-                
-            </div>
-        </div>
-        <div class="hold"></div>
-    </div> -->
-    <div id="index">
+ <div id="index">
         <div class="shoptitle">
             <h2>{{title}}</h2>
         </div>
@@ -69,7 +8,7 @@
         </div>
         <div class="shopmore">
             <div class="notice">
-                <img src="../../assets/shopimg_index/tz.png" alt="">
+                <img style="float: left;" src="../../assets/shopimg_index/tz.png" alt="">
                 <p>{{bannerAd}}</p>
             </div>
             <div class="more">
@@ -79,14 +18,14 @@
         <div class="shoplist">
             <div class="lsit" v-for="item of commodity" :key="item.id" @click="listShop(item)">
                 <div class="listimg">
-                    <img v-bind:src="item.imgsrc" alt="">
+                    <img v-bind:src="item.thumb" alt="" style="width: 100%;height: 100%;">
                     <!-- <img src="../../assets/shopimg_index/kuangji.png" alt=""> -->
                 </div>
                 <div class="listcontent">
-                    <h3 class="name">{{item.name}}</h3>
-                    <p class="jianjie">{{item.jianjie}}</p>
+                    <h3 class="name">{{item.title}}</h3>
+                    <p class="jianjie">{{item.description}}</p>
                     <div class="jifen">积分：
-                        <span>{{item.jifen}}</span></div>
+                        <span>{{item.price}}</span></div>
                 </div>
             </div>
         </div>
@@ -101,13 +40,14 @@ import text from '../text'
 export default {
     data () {
         return {
-            title: 'BAT商城',
-            bannerAd: '我是公告我是公告我是公告我是公告',
-            commodity: [
-                {id:0, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
-                {id:1, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
-                {id:2, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')},
-                {id:3, name: '我是商品名称', jianjie: '我是商品简介', jifen: 123, imgsrc:require('../../assets/shopimg_index/kuangji.png')}
+          title: 'BAT商城',
+          bannerAd: '我是公告我是公告我是公告我是公告',
+          page:0,
+          lastId:0,
+          cpage:0,
+          clastId:0,
+          commodity: [
+
             ]
         }
     },
@@ -117,46 +57,36 @@ export default {
     mounted() {
     },
     created () {
-        // let  status = this.$cookies.get('status')
-        // if(status == -1){
-        //     this.$dialog.confirm({
-        //         title: '提示',
-        //         message: 未通过实名认证
-        //     }).then(() => {
-        //         this.$router.push('/authentication')
-        //     })
-        //     return
-        // }else if(status == -2){
-        //     this.$dialog.confirm({
-        //         title: '提示',
-        //         message: '未认证'
-        //     }).then(() => {
-        //         this.$router.push('/authentication')
-        //     })
-        //     return 
-        // }else if(status ==  0) {
-        //     Toast('申请中')
-        //     return
-        // }
+
+      this.page = this.page +1;
+      this.$axios.fetchPost('/portal/SimpleShop',
+        {
+          source: "web",
+          version: "v1",
+          module: "Goods",
+          interface: "1000",
+          data: {page:this.page,lastId:this.lastId}
+        }).then(res => {
+        if(res.success){
+          this.page = res.data.currentPage;
+          this.lastId = res.data.lastId;
+          this.commodity = res.data.list;
+        }
+      })
+
+
+      this.cpage = this.cpage +1;
         this.$axios.fetchPost('/portal',
         {
             source: "web",
             version: "v1",
             module: "Content",
-            interface: "4005",
-            data: {}
+            interface: "3000",
+            data: {page:this.cpage,lastId:this.clastId}
         }).then(res => {
             if(res.success){
-                let text = []
-                res.data.forEach((element, index) => {
-                    text.push({
-                        text: element,
-                        key: index,
-                        time: 1000*Math.floor(Math.random()*10)
-                    })
-                });
-                this.classList = text
-                this.createDM ()
+                this .bannerAd = res.data.list[0].title;
+
             }
         })
         this.$axios.fetchPost('/portal',

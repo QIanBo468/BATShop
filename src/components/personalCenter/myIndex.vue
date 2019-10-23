@@ -9,7 +9,7 @@
 
         <div class="headtext">
           <p>账号：{{info.account}}</p>
-          <p>ID：{{info.id}}</p>
+          <p>等级：{{info.level}}</p>
           <!-- <p>级别：{{info.level}}</p> -->
         </div>
          <div class="yaoqingma">
@@ -100,7 +100,7 @@ export default {
     return {
       info: '',
       avatar: '',
-      yaoqimgma: 123456
+      yaoqimgma: ''
     }
   },
   computed: {},
@@ -123,6 +123,7 @@ export default {
         // this.goodsList = res.data.list;
         this.info = res.data
         this.avatar = res.data.avatar
+        this.yaoqimgma = res.data.inviteCode
       })
   }
 }

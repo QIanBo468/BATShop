@@ -34,8 +34,8 @@
             <router-link to='/usdt'>
                 <img src="../../../static/images/index/yitai@3x.png" width="40px" height="40px" alt="">
                 <div class='num'>
-                    <div>{{usdt.name}}</div>
-                    <div>{{usdt.have}}</div>
+                    <div>{{usdt.label}}</div>
+                    <div>{{usdt.value}}</div>
                 </div>
                 <img src="../../../static/images/index/in@3x(2).png" width="16px" height="16px" alt="">
             </router-link>
@@ -44,8 +44,8 @@
             <router-link to='/ofc' class='bgyellow'>
                 <img src="../../../static/images/index/usdt@3x.png" width="40px" height="40px" alt="">
                 <div class='num'>
-                    <div>{{ofc.name}}</div>
-                    <div>{{ofc.have}}</div>
+                    <div>{{ofc.label}}</div>
+                    <div>{{ofc.value}}</div>
                 </div>
                 <img src="../../../static/images/index/in@3x(2).png" width="16px" height="16px" alt="">
             </router-link>
@@ -54,8 +54,8 @@
             <router-link to='/fund' class='bgred'>
             <img src="../../../static/images/index/laiwen@3x.png" width="40px" height="40px" alt="">
             <div class='num'>
-                <div>{{LoveFund.name}}</div>
-                <div>{{LoveFund.have}}</div>
+                <div>{{LoveFund.label}}</div>
+                <div>{{LoveFund.value}}</div>
             </div>
             <img src="../../../static/images/index/in@3x(2).png" width="16px" height="16px" alt="">
             </router-link>
@@ -69,8 +69,8 @@ export default {
      data () {
         return {
             usdt: {
-                name: 'BAT钱包',
-                have: 751098.12
+                label: 'BAT钱包',
+               value: 0.00
             },
             ofc: {
                 name: '可用积分',
@@ -83,21 +83,21 @@ export default {
 
         }
     },
-    // created () {
-    //     this.$axios.fetchPost('/portal',
-    //     {
-    //         source: "web",
-    //         version: "v1",
-    //         module: "Finance",
-    //         interface: "4003",
-    //         data: {}
-    //     }).then(res => {
-    //         this.usdt = res.data.usdt
-    //         this.ofc = res.data.ofc
-    //         this.fu = res.data.fu
-    //         this.LoveFund = res.data.LoveFund
-    //     })
-    // },
+    created () {
+        this.$axios.fetchPost('/portal',
+        {
+            source: "web",
+            version: "v1",
+            module: "Finance",
+            interface: "1000",
+            data: {}
+        }).then(res => {
+            this.usdt = res.data.credit_1
+            this.ofc = res.data.credit_5
+            this.fu = res.data.fu
+            this.LoveFund = res.data.credit_3
+        })
+    },
     // data () {
     //     return {
     //         goodsList: [],

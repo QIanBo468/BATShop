@@ -17,9 +17,9 @@
     <div class="shopbuy">
       <div class="shopbuys">
         <div class="shopimg">
-        <img :src="shopitem.listShop.imgsrc" alt="">
+        <img :src="shopitem.listShop.thumb" alt="">
       </div>
-        <p class="shopjs">{{shopitem.jieshao}}</p>
+        <p class="shopjs">{{shopitem.listShop.description}}</p>
       </div>
       <div class="purchase">
         <p>采购数量</p>
@@ -32,7 +32,7 @@
     </div>
     <div class="endbuy">
       <div class="jifen">
-        <p>合计:   {{shopitem.listShop.jifen * shopitem.purchase}}积分</p>
+        <p>合计:   {{shopitem.listShop.price * shopitem.purchase}}积分</p>
       </div>
       <div class="queren">提交订单</div>
     </div>

@@ -1,26 +1,12 @@
 <template>
   <div class="newaddress">
     <van-nav-bar title="添加地址" left-arrow @click-left="onClickLeft" />
-    <!-- <div class="new_add">
-      <div class="add">
-        <div class="adds">
-          <p>收货人</p>
-          <input type="text" placeholder="请输入姓名" v-model="name" />
-        </div>
-        <div class="adds">
-          <p>手机号</p>
-          <input type="text" placeholder="请输入有效地址" v-model="address" />
-        </div>
-        <div class="adds">
-          <p>所在地区</p> -->
          <van-address-edit
             :area-list="areaList"
-           
             :search-result="searchResult"
             area-columns-placeholder="['请选择', '请选择', '请选择']"
             @save="onSave"
             @delete="onDelete"
-            
           />
 
           <!-- <input type="text" placeholder="请输入有效地址" v-model="address" /> -->

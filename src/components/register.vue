@@ -101,7 +101,7 @@ export default {
                 inviteCode: '',
                 time: 60,
                 btntxt: '发送验证码',
-                disabled: false,
+                disabled: true,
                 captcha: ''
             },
             // obj: {
@@ -126,17 +126,18 @@ export default {
         },
         sendCode () {
             var phone = this.fromObj.account;
-            if(!(/^[1][3,4,5,7,8][0-9]{9}$/.test(phone))){ 
+            if(!(/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(phone))){
                 Toast("手机号码有误，请重填");  
                 return false; 
             }
-            if(this.disabled == false){
+            console.log(this.disabled)
+
                 this.$axios.fetchPost('/portal',
                 {
                 "source":"web",
                 "version":"v1",
                 "module":"Account",
-                "interface":"1003",
+                "interface":"1001",
                 "data":
                 {"account": this.fromObj.account,}
                 }).then(res => {
@@ -159,7 +160,6 @@ export default {
                 }).catch( res => {
                 Toast(res.message)
                 })
-            }
 
         },
         submit () {
