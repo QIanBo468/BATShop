@@ -151,8 +151,8 @@ export default {
                     source: "web",
                     version: "v1",
                     module: "Finance",
-                    interface: "2100",
-                    data: {lastId: this.lastId,page: this.page ++,creditType: 'credit_1',direction: direction}
+                    interface: "1001",
+                    data: {lastId: this.lastId,page: this.page ++,creditType: 'credit_5',direction: direction}
                 }).then(res => {
                     this.lastPage = res.data.lastPage
                     this.lastId = res.data.lastId

@@ -16,26 +16,6 @@
             <div class='money'>
                 {{money}}
             </div>
-            <!-- <div class='title'>
-                会员ID
-            </div>
-
-            <div class="inputBox">
-                <van-field
-                    placeholder="请输入会员ID"
-                    :border="false"
-                    name="id"
-                    v-model="form.id"
-                    :error="errors.has('id')"
-                    v-validate="'required'"
-                />
-            </div> -->
-
-            <!-- <InputImg style="width: 343px;height: 40px;margin: 0 auto" :placeholder='placesUser'>
-                <template slot="right"> 
-                    <img :src="InputImg" alt="">
-                </template>
-            </InputImg> -->
 
             <div class='title'>
                 <div class="g"></div>
@@ -70,6 +50,7 @@
                     v-model="form.captcha"
                     :error="errors.has('captcha')"
                     v-validate="'required'"
+                    autocomplete="off"
                 />
                 <div class='red time' @click='time'>{{codeText}}</div>
             </div>
@@ -157,11 +138,12 @@ export default {
                     source: "web",
                     version: "v1",
                     module: "Finance",
-                    interface: "3004",
+                    interface: "2000",
                     data: {}
                 }).then(res => {
+                    console.log(res.data)
                     if(res.success){
-                        // console.log(res.data)
+                        
                         this.procedure = res.data
                     }else{
                         Toast(res.message)
@@ -183,9 +165,11 @@ export default {
                 source: "web",
                 version: "v1",
                 module: "Finance",
-                interface: "4003",
+                interface: "2000",
                 data: {}
             }).then(res => {
+                console.log(res);
+                
                 if(res.success){
                     this.list = res.data
                     var obj =  ''
@@ -264,20 +248,23 @@ export default {
             var that = this
             this.$validator.validateAll().then(function(result) {
                 if(result){
-                    var interfaces = '3002'
-                    if(that.radio == 'usdt') {
-                        interfaces = '3001'
-                    }else if(that.radio == 'ofc'){
-                        interfaces = '3000'
-                    }
+                    // var interfaces = '3002'
+                    // if(that.radio == 'usdt') {
+                    //     interfaces = '3001'
+                    // }else if(that.radio == 'ofc'){
+                    //     interfaces = '3000'
+                    // }
                     that.$axios.fetchPost('/portal',
                     {
                         source: "web",
                         version: "v1",
                         module: "Finance",
-                        interface: interfaces,
-                        data: that.form
+                        interface: 2001,
+                        // data: that.form
+                        data: {creditType: 'credit_1', account}
                     }).then(res => {
+                        console.log(res);
+                        
                         if(res.success){
                             that.form = {
                                 amount: '',

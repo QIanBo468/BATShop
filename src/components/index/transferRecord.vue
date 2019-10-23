@@ -66,7 +66,7 @@ export default {
         var type = this.$route.query.type,
         status = '3102'
         if(type == 'BAT'){
-            status = '3101'
+            status = '2002'
         }else if(type == 'ofc'){
             status = '3100'
         }
@@ -85,9 +85,11 @@ export default {
                     source: "web",
                     version: "v1",
                     module: "Finance",
-                    interface:  this.status,
+                    interface:  2002,
                     data: {lastId: this.lastId,page: this.page ++,isOut: true}
                 }).then(res => {
+                    console.log(res);
+                    
                     this.list = this.list.concat(res.data.list)
                     this.lastPage = res.data.lastPage
                     this.loading = false;

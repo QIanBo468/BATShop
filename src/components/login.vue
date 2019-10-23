@@ -16,19 +16,21 @@
                     name="phone"
                     v-validate="'required|phones'"
                     :error="errors.has('phone')"
+                    autocomplete="off"
                 >
                 <template slot='left-icon'>
                     <img class='inputIcon' src='../../static/images/index/xingming 2@2x.png'/>
                 </template>
                 </van-field>
                 <van-field
-                  style="color:#fff"
+                  style="color:#fff;"
                     placeholder="请输入密码"
                     type="password"
                     v-validate="'required'"
                     name='password'
                     :error="errors.has('password')"
                     v-model="obj.password"
+                    autocomplete="off"
                 >
                 <template slot='left-icon'>
                     <img class='inputIcon' src='../../static/images/index/jihuoma@2x.png'/>
@@ -112,11 +114,29 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+input:-internal-autofill-selected {
+    background-color: rgb(0, 0, 0) !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+    box-shadow: inset 0 0 0 1000px #000!important;
+}
+// input:-internal-autofill-previewed,
+// input:-internal-autofill-selected {
+//     -webkit-text-fill-color: #FFFFFF !important;
+//     transition: background-color 5000s ease-in-out 0s !important;
+// }
+// input:-internal-autofill-selected {
+//     background: transparent !important;
+// }
 #loginBox{
     width: 100%;
     height: 100%;
     background: #0b0c21;
 }
+    /deep/.van-field__control{
+        color: #fff;
+    }
 .van-nav-bar{
     background: #0b0c21;
     

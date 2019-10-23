@@ -51,9 +51,7 @@ export default {
       images: [
 
       ],
-      jieshao: '这里是介绍这里是介绍这里是介绍这里是介绍这里是介绍这里是介绍',
       purchase: 1,
-      xqtusrc: require('../../assets/shopimg_index/kuangji.png')
     }
   },
   created() {
@@ -131,7 +129,8 @@ export default {
     .routerback{
       // display: flex;
       width: 100%;
-      height: 40px;
+      height: 60px;
+      position: relative;
       .back{
         float: left;
         height: 40px;
@@ -142,6 +141,7 @@ export default {
         text-align: center;
         line-height: 40px;
         margin: 0;
+        font-size: 16px;
       }
     }
     .zhanshi{
@@ -176,6 +176,7 @@ export default {
     .purchase{
       width: 100%;
       height: 40px;
+      margin: 20px;
       background: #1d1e3d;
       box-sizing: border-box;
       font-size: 14px;
@@ -238,8 +239,8 @@ export default {
       height: 40px;
       margin-top: 10px;
       // background: #201cfa;
-      background:linear-gradient(180deg,#494EFE 0%,#0C04F8 100%);
-      font-size: 18px;
+      background:linear-gradient(90deg,#494EFE 0%,#0C04F8 100%);
+      font-size: 17px;
       text-align: center;
       line-height: 40px;
     }

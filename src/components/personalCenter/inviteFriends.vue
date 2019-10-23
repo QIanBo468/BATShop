@@ -53,7 +53,7 @@
         </ul>
         <button @click="show = false">取消</button>
       </div>
-    </van-popup>-->
+    </van-popup> -->
   </div>
 </template>
 
@@ -90,7 +90,7 @@ export default {
   created () {
     this.$axios
       .fetchPost('/portal', {
-        interface: '7000',
+        interface: '4000',
         module: 'User',
         source: 'web',
         version: 'v1'

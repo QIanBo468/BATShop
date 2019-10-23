@@ -47,9 +47,9 @@ export default {
           source: 'web',
           version: 'v1',
           data: {
-            oldPassword: this.login_pwd,
-            password: this.password,
-            repeat: this.passPwd
+            captcha: this.login_pwd,
+            oldPassword	: this.password,
+            password: this.passPwd
           }
         })
         .then(res => {

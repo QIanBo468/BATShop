@@ -8,13 +8,13 @@
     <div class="xuanze" v-for="(item, index) of order" :key="index">
       <div class="xuanzeicon" @click="xuanzhong(item)">
         <div class="xuanzeicons">
-          <img :src="item.xuanzhong ? imgsrc1:imgsrc" alt="">
+          <img :src="item.isDefault ? imgsrc:imgsrc1" alt="">
         </div>
         <div class="xinxi">
-          <div class="dizhi">{{item.usesite}}</div>
+          <div class="dizhi">{{item.address}}</div>
           <div class="phon">
-            <p>{{item.usename}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
-            <p>{{item.phone}}</p>
+            <p>{{item.name}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+            <p>{{item.mobile}}</p>
           </div>
         </div>
       </div>
@@ -39,13 +39,31 @@ export default {
     return {
       imgsrc: '../../../static/images/index/xuanze.png',
       imgsrc1: '../../../static/images/index/xuanze(4).png',
+      lastId: 0,
+      page:0,
       order:[
-        { usename: '张先生', usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', phone: 13371495332, xuanzhong: true},
-        { usename: '张先生', usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', phone: 13371495332, xuanzhong: false},
-        { usename: '张先生', usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', phone: 13371495332, xuanzhong: false},
-        { usename: '张先生', usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', phone: 13371495332, xuanzhong: false}
+        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 0},
+        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1},
+        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1},
+        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1}
       ]
     }
+  },
+  created() {
+    this.$axios.fetchPost('/portal',{
+      source: "web",
+      version: "v1",
+      module: "Address",
+      interface: "2000",
+      data: {lastId: this.lastId, page: this.lastId}
+    }).then(res =>{
+      // console.log(res)
+      if(!res.success){
+          this.page = res.data.currentPage;
+          this.lastId = res.data.lastId;
+          this.order = res.data.list;
+        }
+    })
   },
   methods: {
     back () {

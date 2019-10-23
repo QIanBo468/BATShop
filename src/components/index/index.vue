@@ -220,6 +220,7 @@ export default {
     .connected .van-grid-item__content{
         padding: 0;
     }
+
 </style>
 <style lang="less" scoped>
 #index{
@@ -284,14 +285,19 @@ export default {
             height: 200px;
             width: 45%;
             margin-top: 10px;
-            padding-left: 10px;
+            // padding-left: 10px;
             background: #212243;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            // align-items: center;
             .listimg{
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                width: 100%;
+                img{
                 width: 100%;
                 height: 50%;
+                }
+                
             }
             .name{
                 color:#c4c5cd;

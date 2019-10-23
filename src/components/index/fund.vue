@@ -122,7 +122,7 @@ export default {
                     source: "web",
                     version: "v1",
                     module: "Finance",
-                    interface: "2100",
+                    interface: "1001",
                     data: {lastId: this.lastId,page: this.page ++,creditType: 'credit_3',direction: direction}
                 }).then(res => {
                     this.lastPage = res.data.lastPage

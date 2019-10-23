@@ -44,6 +44,7 @@ export default {
   data () {
     return {
      shopitem: {},
+     orderid: 1,
      order: {
       usename: '张先生',
       usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室',
@@ -54,6 +55,22 @@ export default {
   created () {
     this.shopitem = this.$route.query.item
     console.log(this.shopitem)
+       this.$axios.fetchPost('/portal',
+        {
+          source: "web",
+          version: "v1",
+          module: "Address",
+          interface: "2002",
+          // data: {page:this.page,lastId:this.lastId}
+          data:{id: this.orderid}
+        }).then(res => {
+          console.log(res)
+        if(res.success){
+          this.page = res.data.currentPage;
+          this.lastId = res.data.lastId;
+          this.commodity = res.data.list;
+        }
+      })
   },
   methods: {
     back () {

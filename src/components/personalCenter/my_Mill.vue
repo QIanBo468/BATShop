@@ -34,12 +34,7 @@ export default {
       page: 1,
       loading: false,
       finished: false,
-      list: [
-        {listshop: '双面渔夫帽女夏季日系大檐帽时尚百搭防晒遮阳韩版网红ins太阳帽', listmeny: 380, listnum: 2 ,listimg:require('../../assets/shopimg_index/kuangji.png')},
-         {listshop: '双面渔夫帽女夏季日系大檐帽时尚百搭防晒遮阳韩版网红ins太阳帽', listmeny: 380, listnum: 2 ,listimg:require('../../assets/shopimg_index/kuangji.png')},
-          {listshop: '双面渔夫帽女夏季日系大檐帽时尚百搭防晒遮阳韩版网红ins太阳帽', listmeny: 380, listnum: 2 ,listimg:require('../../assets/shopimg_index/kuangji.png')},
-           {listshop: '双面渔夫帽女夏季日系大檐帽时尚百搭防晒遮阳韩版网红ins太阳帽', listmeny: 380, listnum: 2 ,listimg:require('../../assets/shopimg_index/kuangji.png')}
-      ]
+      list: []
     }
   },
   computed: {},
@@ -57,9 +52,9 @@ export default {
       var page = this.page++
       setTimeout(() => {
         this.$axios
-          .fetchPost('/portal', {
-            interface: '4000',
-            module: 'Investment',
+          .fetchPost('/portal/SimpleShop', {
+            interface: '2000',
+            module: 'Order',
             source: 'web',
             version: 'v1',
             data: {
@@ -92,7 +87,7 @@ export default {
     }
   },
   created () {
-
+    this.get_mill ()
   }
 }
 </script>
