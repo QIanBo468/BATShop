@@ -30,6 +30,21 @@
         </div>
       </div>
     </div>
+
+    <div class="buyway">
+      <div class="buytitle">
+      <div class="g"></div><p>选择支付方式</p>
+      </div>
+      <div class="way">
+      <div class="batbuy" @click="way('bat')">
+        <img :src="[buyway === 0 ? imgsrc1 : imgsrc]" alt=""><span>BAT币({{shopitem.listShop.price * shopitem.purchase*12.3}})</span> 
+      </div>
+      <div class="jifenbuy" @click="way('jifen')">
+        <img :src="[buyway === 1 ? imgsrc1 : imgsrc]" alt=""><span>积分({{shopitem.listShop.price * shopitem.purchase}})</span> 
+      </div>
+      </div>
+    </div>
+
     <div class="endbuy">
       <div class="jifen">
         <p>合计:   {{shopitem.listShop.price * shopitem.purchase}}积分</p>
@@ -40,11 +55,15 @@
 </template>
 
 <script>
+import { log } from 'util'
 export default {
   data () {
     return {
      shopitem: {},
      orderid: 1,
+    imgsrc:require('../../../static/images/index/xuanze.png'),
+    imgsrc1: require('../../../static/images/index/xuanze(4).png'),
+    buyway: 0,  // 0 为bat  1 为积分
      order: {
       usename: '张先生',
       usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室',
@@ -73,6 +92,16 @@ export default {
       })
   },
   methods: {
+    way(type) {
+      
+      if (type == 'bat'){
+        this.buyway = 0
+        console.log(this.buyway)
+      } else {
+        this.buyway = 1
+        console.log(this.buyway)
+      }
+    },
     back () {
       this.$router.go(-1)
     },
@@ -245,5 +274,44 @@ export default {
     }
   }
 }
-
+.buyway{
+  margin-top: 10px;
+  width: 100%;
+  background: #1d1c3b;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  .buytitle{
+    display: flex;
+    align-items: center;
+    padding: 15px 0 ;
+    .g{
+        height: 20px;
+        // line-height: 20px;
+        width: 5px;
+        background:linear-gradient(180deg,#494EFE 0%,#0C04F8 100%);
+        margin-right: 10px;
+        border-radius: 8px;
+      }
+      p{
+        font-size: 16px;
+        margin: 0;
+      }
+  }
+  .way{
+    width: 100%;
+    display: flex;
+    justify-content:space-around;
+    font-size: 16px;
+    margin-bottom: 10px;
+    .batbuy , .jifenbuy{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      img{
+        margin-right: 3px;
+      }
+    }
+  }
+}
 </style>

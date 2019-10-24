@@ -70,13 +70,13 @@ export default {
       this.$router.go(-1)
     },
     xuanzhong (item) {
-      console.log(item.xuanzhong)
+      console.log(item.isDefault)
       this.order.forEach(
         (list) => {
-          list.xuanzhong = false
+          list.isDefault = 1
         }
       )
-      item.xuanzhong = !item.xuanzhong
+      item.isDefault = !item.isDefault
     },
     del (index) {
       this.order.splice(index,1)
