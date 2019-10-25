@@ -48,11 +48,11 @@ export default {
             },
             ofc: {
                 name: '可用积分',
-                have: 751098.12
+                have: 0.00
             },
             LoveFund: {
                 name: '消费积分',
-                have: 751098.12
+                have: 0.00
             },
 
         }

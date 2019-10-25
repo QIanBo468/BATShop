@@ -2,7 +2,22 @@
   <div class="fix_deal">
     <van-nav-bar title="修改支付密码" left-arrow @click-left="onClickLeft" />
     <div class="deal_list">
-      <van-field v-model="current" placeholder="请输入当前支付密码" label="请输入当前支付密码" type="password" />
+
+      <van-field
+        label="请输入验证码"
+        placeholder="请输入验证码"
+        name="captcha"
+        v-validate="'required'"
+        v-model='fromObj.captcha'
+        :error="errors.has('captcha')"
+        autocomplete="off"
+      >
+      <template slot="button">
+        <div @click='sendCode' class='code'>
+          {{fromObj.btntxt}}
+        </div>
+      </template>
+      </van-field>
       <van-field v-model="newPwd" placeholder="请输入新密码" label="请输入新密码" type="password" />
       <van-field v-model="checkPwd" placeholder="请再次输入新密码" label="确认新密码" type="password" />
     </div>
@@ -13,12 +28,19 @@
 </template>
 
 <script>
+  import { Toast } from 'vant'
 export default {
   data() {
     return {
       current: "",
       newPwd: "",
-      checkPwd: ""
+      checkPwd: "",
+      fromObj: {
+        time: 60,
+        btntxt: '发送验证码',
+        disabled: true,
+        captcha: ''
+      },
     };
   },
   computed: {},
@@ -26,17 +48,47 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
+    sendCode () {
+      this.$axios.fetchPost('/portal',
+        {
+          "source":"web",
+          "version":"v1",
+          "module":"User",
+          "interface":"2003",
+          "data":
+            {"account": this.fromObj.account,}
+        }).then(res => {
+        Toast(res.message)
+        if(res.code == 0){
+          this.fromObj.disabled = true;
+          var  that = this
+          var times = setInterval(function() {
+            that.fromObj.time--;
+            if( that.fromObj.time > 0){
+              that.fromObj.btntxt = '重新获取('+ that.fromObj.time +'s)'
+            }else{
+              clearInterval(times)
+              that.fromObj.time = 10
+              that.fromObj.btntxt = "获取验证码";
+              that.fromObj.disabled = false;
+            }
+          }, 1000);
+        }
+      }).catch( res => {
+        Toast(res.message)
+      })
+
+    },
     fix_pass() {
       this.$axios
         .fetchPost("/portal", {
-          interface: "2002",
+          interface: "2004",
           module: "User",
           source: "web",
           version: "v1",
           data: {
-            oldSafeword: this.current,
-            safeword: this.newPwd,
-            repeat: this.checkPwd
+            captcha: this.fromObj.captcha,
+            safeword: this.newPwd
           }
         })
         .then(res => {
@@ -52,6 +104,17 @@ export default {
 };
 </script>
 <style scoped>
+
+  .code{
+    padding: 0 6px;
+    height:24px;
+    box-sizing: border-box;
+    border-radius:12px;
+    border:1px solid #999999;
+    color: #999999;
+    text-align: center;
+    font-size: 12px;
+  }
 .fix_deal {
   background: #0D0900;
   min-height: 100vh;

@@ -3,12 +3,12 @@
     <div class="routerback">
       <div class="back" @click="back"><img src="../../../static/images/icon/back-s.png" alt=""></div>
       <h3 class="xiangiqng">我的收货地址</h3>
-      <div class="addsite">添加地址</div>
+      <div class="addsite" @click="onClickRight">添加地址</div>
     </div>
     <div class="xuanze" v-for="(item, index) of order" :key="index">
       <div class="xuanzeicon" @click="xuanzhong(item)">
         <div class="xuanzeicons">
-          <img :src="item.isDefault ? imgsrc:imgsrc1" alt="">
+          <img :src="item.isDefault ? imgsrc1:imgsrc" alt="">
         </div>
         <div class="xinxi">
           <div class="dizhi">{{item.address}}</div>
@@ -20,14 +20,14 @@
       </div>
       <div class="deladd">
         <div class="add">
-          <van-icon name="records">编辑</van-icon>
+          <van-icon name="records" @click="edit(item.id)">编辑</van-icon>
         </div>
         <div class="del">
-          <van-icon name="delete" @click="del(index)">删除</van-icon>
+          <van-icon name="delete" @click="del(item.id)">删除</van-icon>
         </div>
       </div>
     </div>
-    <div class="changesite">
+    <div class="changesite" @click="sureAddress">
       确定
     </div>
   </div>
@@ -37,52 +37,134 @@
 export default {
   data () {
     return {
+
+
+      page:0,
+      lastId:0,
       imgsrc: '../../../static/images/index/xuanze.png',
       imgsrc1: '../../../static/images/index/xuanze(4).png',
-      lastId: 0,
-      page:0,
       order:[
-        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 0},
-        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1},
-        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1},
-        { name: '张先生', address: '山东省临沂市 兰山区北京路23号 环球中心A座2001室', mobile: 13371495332, isDefault: 1}
-      ]
+
+      ],
+      list: '',
+      shopitem:{},
+      addressid:''
     }
-  },
-  created() {
-    this.$axios.fetchPost('/portal',{
-      source: "web",
-      version: "v1",
-      module: "Address",
-      interface: "2000",
-      data: {lastId: this.lastId, page: this.lastId}
-    }).then(res =>{
-      // console.log(res)
-      if(!res.success){
-          this.page = res.data.currentPage;
-          this.lastId = res.data.lastId;
-          this.order = res.data.list;
-        }
-    })
   },
   methods: {
     back () {
       this.$router.go(-1)
     },
     xuanzhong (item) {
-      console.log(item.isDefault)
+      console.log(item)
       this.order.forEach(
-        (list) => {
-          list.isDefault = 1
+        (order) => {
+          order.isDefault = false
         }
       )
       item.isDefault = !item.isDefault
+      this.addressid = item.id
+      this.shopitem.address= item
+    },
+    edit (index) {
+      this.$router.push({
+        path: '/newAddress',
+        query:{
+          id:index
+        }
+      })
     },
     del (index) {
-      this.order.splice(index,1)
-      // this.$set(this.order, index, null)
-      // console.log(this.order)
+      this.$dialog
+        .confirm({
+          title: '',
+          message: '确认删除此地址？'
+        }).then(() => {
+        // on confirm
+        this.$axios.fetchPost('/portal', {
+          interface: '2004',
+          module: 'Address',
+          source: 'web',
+          version: 'v1',
+          data: {
+            id: index
+          }
+        })
+          .then(res => {
+            console.log(res)
+            if (res.code != 1) {
+              this.$toast(res.message);
+              this.order.splice(index,1)
+            }
+          })
+      }).catch(() => {
+        // on cancel
+      });
+    },
+    onClickLeft () {
+      this.$router.go(-1)
+    },
+    // clickPosition 表示关闭时点击的位置
+    onClose (clickPosition, instance) {
+      switch (clickPosition) {
+        case 'left':
+        case 'cell':
+        case 'outside':
+          instance.close()
+          break
+        case 'right':
+          break
+      }
+    },
+    onClickRight () {
+      this.$router.push('newAddress')
+    },
+    get_address () {
+      this.page = this.page +1;
+      this.$axios
+        .fetchPost('/portal', {
+          interface: '2000',
+          module: 'Address',
+          source: 'web',
+          version: 'v1',
+          data: {page:this.page,lastId:this.lastId}
+        })
+        .then(res => {
+          this.order = res.data.list,
+            this.page = res.data.currentPage,
+            this.lastId = res.data.lastId
+        })
+    },
+    sureAddress () {
+      this.$router.push({
+        path: '/indexBuy',
+        query:{
+          item: this.shopitem
+
+        }
+      })
     }
+  },
+
+  created () {
+    this.shopitem = this.$route.query.item;
+    console.log(this.shopitem);
+    console.log(111);
+
+    /*this.$axios.fetchPost('/portal',{
+      source: "web",
+      version: "v1",
+      module: "Address",
+      interface: "2000",
+      data: {lastId: this.lastId, page: this.lastId}
+    }).then(res =>{
+      if(!res.success){
+        this.page = res.data.currentPage;
+        this.lastId = res.data.lastId;
+        this.order = res.data.list;
+      }
+    })*/
+    this.get_address()
   }
 }
 </script>

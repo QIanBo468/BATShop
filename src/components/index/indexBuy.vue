@@ -9,15 +9,16 @@
         <van-icon name="location" color="#201cfa" size="30px"></van-icon>
       </div>
       <div class="buyuse">
-        <p class="usename">{{order.usename}}</p>
-        <p class="usestie">{{order.usesite}}</p>
+        <p class="usename">{{address.username}}</p>
+        <p class="usestie">{{address.usesite}}</p>
+        <p class="usestie">{{address.phone}}</p>
       </div>
       <van-icon name="arrow" color="#201cfa" size="20px"></van-icon>
     </div>
     <div class="shopbuy">
       <div class="shopbuys">
         <div class="shopimg">
-        <img :src="shopitem.listShop.thumb" alt="">
+          <img :src="shopitem.listShop.thumb" alt="">
       </div>
         <p class="shopjs">{{shopitem.listShop.description}}</p>
       </div>
@@ -37,71 +38,103 @@
       </div>
       <div class="way">
       <div class="batbuy" @click="way('bat')">
-        <img :src="[buyway === 0 ? imgsrc1 : imgsrc]" alt=""><span>BAT币({{shopitem.listShop.price * shopitem.purchase*12.3}})</span> 
+        <img :src=" buyway === 0 ? imgsrc1 : imgsrc" alt="">
+        <span>BAT币({{credit_1}})</span>
       </div>
       <div class="jifenbuy" @click="way('jifen')">
-        <img :src="[buyway === 1 ? imgsrc1 : imgsrc]" alt=""><span>积分({{shopitem.listShop.price * shopitem.purchase}})</span> 
+        <img :src="buyway === 1 ? imgsrc1 : imgsrc" alt="">
+        <span>积分({{credit_5}})</span>
       </div>
       </div>
     </div>
 
     <div class="endbuy">
       <div class="jifen">
-        <p>合计:   {{shopitem.listShop.price * shopitem.purchase}}积分</p>
+        <p>合计:   {{payMoney}}积分</p>
       </div>
-      <div class="queren">提交订单</div>
+      <div class="queren"  @click="submit">提交订单</div>
     </div>
     </div>
 </template>
 
 <script>
 import { log } from 'util'
+import { Toast } from 'vant'
 export default {
   data () {
     return {
-     shopitem: {},
-     orderid: 1,
-    imgsrc:require('../../../static/images/index/xuanze.png'),
-    imgsrc1: require('../../../static/images/index/xuanze(4).png'),
-    buyway: 0,  // 0 为bat  1 为积分
-     order: {
-      usename: '张先生',
-      usesite: '山东省临沂市 兰山区北京路23号 环球中心A座2001室',
-      phone: 13371495332
-     }
-    }
+      shopitem: {},
+      imgsrc: '../../../static/images/index/xuanze.png',
+      imgsrc1: '../../../static/images/index/xuanze(4).png',
+      buyway: 0, // 0 为bat  1 为积分
+      orderid: 1,
+      payMoney:0,
+      credit_1:0,
+      credit_5:0,
+      time : 3,
+      payType:'credit_1',
+      address: {
+          usename: '',
+          usesite: '',
+          phone: '',
+          addressId:'',
+          num:0
+    },
+  }
   },
-  created () {
+  created ()  {
     this.shopitem = this.$route.query.item
     console.log(this.shopitem)
-       this.$axios.fetchPost('/portal',
+    this.payMoney = this.shopitem.listShop.price * this.shopitem.purchase;
+    this.num = this.shopitem.purchase
+
+
+    this.$axios.fetchPost('/portal/SimpleShop',
+      {
+        source: "web",
+        version: "v1",
+        module: "Order",
+        interface: "1000",
+        // data: {page:this.page,lastId:this.lastId}
+        data:{goodsId: this.shopitem.listShop.id,num:this.num}
+      }).then(res => {
+      console.log(res)
+      if (res.success) {
+        this.payMoney = res.data.amount;
+        this.num = this.num;
+        this.credit_1 = res.data.credit_1;
+        this.credit_2 = res.data.credit_2;
+        this.payMoney = res.data.amount;
+      }
+    })
+    if(this.shopitem.address){
+      this.address.username = this.shopitem.address.name;
+      this.address.phone = this.shopitem.address.mobile;
+      this.address.usesite = this.shopitem.address.address;
+      this.addressId = this.shopitem.address.id;
+    }else{
+      this.$axios.fetchPost('/portal',
         {
           source: "web",
           version: "v1",
           module: "Address",
-          interface: "2002",
+          interface: "3000",
           // data: {page:this.page,lastId:this.lastId}
           data:{id: this.orderid}
         }).then(res => {
-          console.log(res)
+        console.log(res)
         if(res.success){
-          this.page = res.data.currentPage;
-          this.lastId = res.data.lastId;
-          this.commodity = res.data.list;
+          this.address.username = res.data.address.name;
+          this.address.phone = res.data.address.mobile;
+          this.address.usesite = res.data.address.address;
+          this.addressId = res.data.address.id;
         }
       })
+    }
+
   },
   methods: {
-    way(type) {
-      
-      if (type == 'bat'){
-        this.buyway = 0
-        console.log(this.buyway)
-      } else {
-        this.buyway = 1
-        console.log(this.buyway)
-      }
-    },
+
     back () {
       this.$router.go(-1)
     },
@@ -109,11 +142,26 @@ export default {
         this.$router.push({
         path: '/indexSite',
         query:{
-          // item: item
-          // listShops: listShop,
-          // jieshaos: jieshao,
-          // purchases: purchase,
-          // xqtusrcs: xqtusrc
+          item:  this.shopitem
+
+        }
+      })
+    },
+    //更新显示的商品价格
+    changePrice(num){
+      this.$axios.fetchPost('/portal/SimpleShop',
+        {
+          source: "web",
+          version: "v1",
+          module: "Order",
+          interface: "1000",
+          // data: {page:this.page,lastId:this.lastId}
+          data:{goodsId: this.shopitem.listShop.id,num:num}
+        }).then(res => {
+        console.log(res)
+        if(res.success){
+          this.payMoney = res.data.amount;
+          this.num = num
         }
       })
     },
@@ -122,10 +170,43 @@ export default {
         return false
       } else {
         this.shopitem.purchase = this.shopitem.purchase - 1;
+        this.changePrice(this.shopitem.purchase);
       }
     },
     add () {
       this.shopitem.purchase = this.shopitem.purchase + 1
+      this.changePrice(this.shopitem.purchase);
+    },
+    way (type){
+      if(type == 'bat'){
+        this.buyway = 0;
+        this.payType = 'credit_1'
+      }else{
+        this.buyway = 1;
+        this.payType = 'credit_5'
+      }
+    },
+    submit () {
+      console.log(this.addressId);
+      this.$axios.fetchPost('/portal/SimpleShop',
+        {
+          source: "web",
+          version: "v1",
+          module: "Order",
+          interface: "1001",
+          // data: {page:this.page,lastId:this.lastId}
+          data:{goodsId: this.shopitem.listShop.id,num:this.num,addressId: this.addressId,creditType:this.payType}
+        }).then(res => {
+        console.log(res)
+        if(res.success){
+          Toast(res.message)
+          this.$router.push({
+            path: '/my_Mill'
+          })
+        }else{
+          Toast(res.message)
+        }
+      })
     }
   }
 }

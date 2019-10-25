@@ -41,7 +41,7 @@ export default {
     data () {
         return {
           title: 'BAT商城',
-          bannerAd: '我是公告我是公告我是公告我是公告',
+          bannerAd: '',
           page:0,
           lastId:0,
           cpage:0,

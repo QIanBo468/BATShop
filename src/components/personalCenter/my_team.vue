@@ -38,20 +38,35 @@ export default {
       loading: false,
       finished: false,
       list: [
-        {nickname:'黎勇',avatar:require('../../../static/images/index/1@3x.png'),id: 83747899947,created_at: '2019.10.21'},
-        {nickname:'黎勇',avatar:require('../../../static/images/index/1@3x.png'),id: 83747899947,created_at: '2019.10.21'},
-        {nickname:'黎勇',avatar:require('../../../static/images/index/1@3x.png'),id: 83747899947,created_at: '2019.10.21'},
-        {nickname:'黎勇',avatar:require('../../../static/images/index/1@3x.png'),id: 83747899947,created_at: '2019.10.21'},
-        {nickname:'黎勇',avatar:require('../../../static/images/index/1@3x.png'),id: 83747899947,created_at: '2019.10.21'}
+
         ],
-      tjnum: 66666,
-      yeji: 99999
+      tjnum: 0,
+      yeji: 0
     }
   },
   computed: {},
   methods: {
     onClickLeft () {
       this.$router.go(-1)
+    },
+
+    //查询团队业绩
+    get_teamAward(){
+      this.$axios
+        .fetchPost('/portal', {
+          interface: '4100',
+          module: 'User',
+          source: 'web',
+          version: 'v1',
+          data: {
+          }
+        })
+        .then(res => {
+          console.log(res)
+          if (res.code == 0) {
+            this.yeji = res.data.userInfo.performance
+          }
+        })
     },
     get_team () {
       var lastid = ''
@@ -83,6 +98,7 @@ export default {
                 this.finished = true
               } else {
                 var ret = res.data.list
+                this.tjnum = res.data.total;
                 if (page == 1) {
                   this.list = ret
                 } else {
@@ -99,7 +115,9 @@ export default {
       }, 500)
     }
   },
-  created () {}
+  created () {
+    this.get_teamAward();
+  }
 }
 </script>
 <style scoped>

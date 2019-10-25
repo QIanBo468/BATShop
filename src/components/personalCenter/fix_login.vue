@@ -48,7 +48,7 @@ export default {
           version: 'v1',
           data: {
             captcha: this.login_pwd,
-            oldPassword	: this.password,
+            oldPassword	: this.login_pwd,
             password: this.passPwd
           }
         })

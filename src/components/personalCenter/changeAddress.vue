@@ -1,16 +1,14 @@
 <template>
   <div class="newaddress">
-    <van-nav-bar title="添加地址" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="修改地址" left-arrow @click-left="onClickLeft" />
          <van-address-edit
             :area-list="areaList"
             :search-result="searchResult"
-            :address-info = 'addressInfo'
             show-set-default
             area-columns-placeholder="['请选择', '请选择', '请选择']"
             @save="onSave"
             @delete="onDelete"
             @change-area="onChangeArea"
-
           />
 
           <!-- <input type="text" placeholder="请输入有效地址" v-model="address" /> -->
@@ -35,16 +33,12 @@ export default {
       show: false,
       areaList,
       searchResult: [],
-      addressInfo:{},
       name: "",
       address: "",
       provinceCode:'',
       cityCode:'',
       areaCode:'',
-      isDefault:0,
-      id:'',
-      mobile:'',
-      address:''
+     isDefault:0
     };
   },
   computed: {},
@@ -58,41 +52,6 @@ export default {
     if(content.isDefault){
       this.isDefault = 1;
     }
-    if(this.id){
-
-      this.$axios
-        .fetchPost("/portal", {
-          interface: "2003",
-          module: "Address",
-          source: "web",
-          version: "v1",
-          data: {
-            id:this.id,
-            name: content.name,
-            mobile:content.tel,
-            province:this.provinceCode,
-            city:this.cityCode,
-            county:this.areaCode,
-            address:content.addressDetail,
-            isDefault:this.isDefault
-          }
-        })
-        .then(res => {
-          console.log(res);
-          if (res.code == 0) {
-            this.$toast({
-              message: res.message,
-              duration: 1000
-            });
-            setTimeout(() => {
-              this.$router.go(-1);
-            }, 1000);
-          } else {
-            this.$toast(res.message);
-          }
-        });
-
-    }else{
       this.$axios
         .fetchPost("/portal", {
           interface: "2001",
@@ -123,7 +82,8 @@ export default {
             this.$toast(res.message);
           }
         });
-    }
+
+
     },
     onDelete() {
       Toast('delete');
@@ -136,30 +96,22 @@ export default {
     }
   },
   created() {
-    this.id= this.$route.query.id
-    this.$axios.fetchPost('/portal',
+
+  /*  this.$axios.fetchPost('/portal',
       {
         source: "web",
         version: "v1",
         module: "Address",
-        interface: "2002",
-        data:{id:this.id}
+        interface: "1000",
+        data:{}
       }).then(res => {
       console.log(res)
       if(res.success){
-
-        this.provinceCode = res.data.province;
-        this.cityCode = res.data.city;
-        this.areaCode = res.data.county;
-        this.id = res.data.id;
-          if(res.data.isDefault){
-              this.isDefault = true;
-          }else{
-            this.isDefault = false
-          }
-            this.addressInfo = {'id':res.data.id,'name':res.data.name,'tel':res.data.mobile,'areaCode':res.data.county,'addressDetail':res.data.address,'isDefault':this.isDefault }
+        this.page = res.data.currentPage;
+        this.lastId = res.data.lastId;
+        this.commodity = res.data.list;
       }
-    })
+    })*/
 
   }
 };

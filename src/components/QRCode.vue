@@ -24,7 +24,7 @@ data(){
       methods: {
         useqrcode(){
           var canvas = document.getElementById('canvas')
-          QRCode.toCanvas(canvas, 'https://qianbo468.github.io', function (error) {
+          QRCode.toCanvas(canvas, 'http://bat.qdunzi.com', function (error) {
             if (error) console.error(error)
             console.log('QRCode success!');
           })

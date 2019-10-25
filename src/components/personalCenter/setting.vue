@@ -164,7 +164,7 @@ export default {
 
       let form = new FormData()
       form.append("file", file)
-      this.$axios.fetchPost("http://ofc.qdunzi.com/upload", form).then(res => {
+      this.$axios.fetchPost("http://bat.qdunzi.com/upload", form).then(res => {
         // console.log(res)
         this.$axios.fetchPost('/portal', {
           source: "web",
@@ -455,7 +455,7 @@ export default {
     }
 
     &-text {
-      color: #333;
+      color: #fff;
       width: 80%;
       line-height: 14px;
       flex-grow: 1;

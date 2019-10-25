@@ -7,13 +7,10 @@
             :border="false"
             @click-left="onClickLeft"
         />
-        <div class='statis'>
-            <div class='statisTitle'>当前余额</div>
-            <div class='transferBox'>
-                <!-- <div>{{live.creditValue}}</div>
-                <div @click='$router.push({path: "/transfer",query:{type:"LoveFund"}})'>转账</div> -->
-            </div>
-        </div>
+          <div class='statis'>
+            <div>当前余额</div>
+            <div>{{live.creditValue}}</div>
+          </div>
         </div>
         <van-tabs v-model="active" @change="acChange">
             <van-tab title="全部">
@@ -198,6 +195,15 @@ export default {
     box-sizing: border-box;
     color: #fff;
     font-size: 14px;
+  div{
+    height: 20px;
+    line-height: 20px;
+  }
+  div:last-child{
+    height: 32px;
+    line-height: 32px;
+    font-size: 23px;
+  }
     .statisTitle{
         height: 20px;
         line-height: 20px;

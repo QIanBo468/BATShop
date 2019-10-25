@@ -2,17 +2,17 @@
   <div class="mymill_bj">
     <van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" />
     <div>
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="get_mill">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div class="mill_list" v-for="(item,index) in list " :key="index">
           <div class="list">
             <div class="list-img">
-              <img class="list-img" :src="item.listimg" alt />
+              <img class="list-img" :src="item.goods.thumb" alt />
             </div>
             <div class="intrudce">
-              <p>{{item.listshop}}</p>
+              <p>{{item.goods.title}}</p>
               <div class="intrudce-p">
-              <p>￥{{item.listmeny}}</p>
-              <p>x{{item.listnum}}</p>
+              <p>￥{{item.price}}</p>
+              <p>x{{item.goodsNum}}</p>
               </div>
               <!-- <div class="price">
                 <p>累计收益：</p>
@@ -40,9 +40,13 @@ export default {
   computed: {},
   methods: {
     onClickLeft () {
-      this.$router.go(-1)
+      this.$router.push({
+        path: '/myIndex'
+      })
     },
-    get_mill () {
+
+
+    onLoad() {
       var lastid = ''
       if (this.lastId) {
         lastid = this.lastId
@@ -50,6 +54,7 @@ export default {
         lastid = 0
       }
       var page = this.page++
+      // 异步更新数据
       setTimeout(() => {
         this.$axios
           .fetchPost('/portal/SimpleShop', {
@@ -83,12 +88,13 @@ export default {
             }
             this.loading = false
           })
-      }, 500)
-    }
+      }, 500);
+    },
+
+
+
+
   },
-  created () {
-    this.get_mill ()
-  }
 }
 </script>
 <style scoped>
@@ -116,7 +122,7 @@ export default {
 
 }
 .list-img {
-  width: 110px;
+  width: 150px;
   height: 110px;
   display: flex;
   align-items: center;

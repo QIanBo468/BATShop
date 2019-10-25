@@ -57,7 +57,7 @@ export default {
   created() {
     this.orderShop = this.$route.query.item
     this.shopid = this.$route.query.item.id
-    console.log(this.listShop)
+    console.log(this.orderShop)
 
     this.$axios.fetchPost('/portal/SimpleShop',
       {
