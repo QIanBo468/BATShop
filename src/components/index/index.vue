@@ -124,11 +124,11 @@ export default {
     },
     methods : {
         listShop (item) {
+
+            console.log(item)
+            sessionStorage.setItem('shop' , item.id)
             this.$router.push({
                 path: '/indexShop',
-                query:{
-                    item: item
-                }
             })
         },
         message (obj) {

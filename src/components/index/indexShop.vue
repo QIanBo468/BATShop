@@ -55,9 +55,11 @@ export default {
     }
   },
   created() {
-    this.orderShop = this.$route.query.item
-    this.shopid = this.$route.query.item.id
-    console.log(this.orderShop)
+    // this.orderShop = this.$route.query.item
+    this.shopid = sessionStorage.getItem('shop')
+    // sessionStorage.getItem('shop')
+    // sessionStorage.setItem(id)
+    // console.log(this.orderShop)
 
     this.$axios.fetchPost('/portal/SimpleShop',
       {
