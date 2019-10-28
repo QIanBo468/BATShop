@@ -13,37 +13,31 @@
             finished-text="没有更多了"
             @load="onLoad"
             >
-                <div class='record' v-for='(item, index) in list' :key='index'>
-                    <div v-if='item.status == 0' class='status red'>转账中</div>
-                    <div v-if='item.status == 1' class='status'>转账成功</div>
-                    <div v-if='item.status == 2' class='status red'>转账失败</div>
-                    <ul>
-                        <!-- <li>
-                            <div>会员ID</div>
-                            <div>{{item.toUserId}}</div>
-                        </li> -->
-                        <li>
-                            <div>提交时间</div>
-                            <div>{{item.createdAt}}</div>
-                        </li>
-                        <!-- <li>
-                            <div>钱包类型</div>
-                            <div>{{item.creditName}}</div>
-                        </li> -->
-                        <!-- <li v-if='type == "ofc"'>
-                            <div>手续费</div>
-                            <div>{{item.fee}}</div>
-                        </li>
-                        <li v-if='type == "ofc"'>
-                            <div>爱心基金</div>
-                            <div>{{item.love}}</div>
-                        </li> -->
-                        <li>
-                            <div>转账数量</div>
-                            <div class='red'>{{item.money}}</div>
-                        </li>
-                    </ul>
-                </div>
+              <div class='record' v-for='(item, index) in list' :key='index'>
+                <!-- <div class='status'>兑换成功</div> -->
+                <ul>
+                  <li>
+                    <div>兑换数量</div>
+                    <div>{{item.money}}</div>
+                  </li>
+                  <li>
+                    <div>提交时间</div>
+                    <div>{{item.createdAt}}</div>
+                  </li>
+                  <!-- <li>
+                      <div>爱心基金</div>
+                      <div>{{item.loveFund}}</div>
+                  </li>-->
+                  <li>
+                      <div>手续费</div>
+                      <div>{{item.fee}}</div>
+                  </li>
+                  <li>
+                    <div>到账数量</div>
+                    <div class='red'>{{item.realMoney}}BAT</div>
+                  </li>
+                </ul>
+              </div>
             </van-list>
         </div>
     </div>
@@ -75,7 +69,51 @@ export default {
     },
     methods: {
         onLoad() {
-            if (this.lastPage && this.lastPage < this.page) {
+
+
+          var lastid = ''
+          if (this.lastId) {
+            lastid = this.lastId
+          } else {
+            lastid = 0
+          }
+          var page = this.page++
+          setTimeout(() => {
+
+
+            this.$axios.fetchPost('/portal',
+              {
+                source: "web",
+                version: "v1",
+                module: "Finance",
+                interface: "4002",
+                data: { lastId: lastid,page: page,fromCredit: 'credit_1',toCredit:'credit_2'}
+              }).then(res => {
+              if(res.success){
+                if (res.data.list.length == 0) {
+                  this.finished = true
+                } else {
+                  var ret = res.data.list
+                  this.tjnum = res.data.total;
+                  if (page == 1) {
+                    this.list = ret
+                  } else {
+                    for (var x in ret) {
+                      this.list.push(ret[x])
+                    }
+                  }
+                }
+              }else {
+                this.finished = true
+              }
+              this.loading = false
+            })
+
+          }, 500)
+
+
+
+         /*   if (this.lastPage && this.lastPage < this.page) {
                 this.finished = true
                 this.loading = false;
             }else{
@@ -95,7 +133,7 @@ export default {
                     this.loading = false;
                     this.lastId = res.data.lastId
                 })
-            }
+            }*/
         },
     }
 }
@@ -131,7 +169,7 @@ export default {
                     font-size: 12px;
                     display: flex;
                     margin-bottom: 5px;
-                    color: #fff;
+                  color: #000;
                     div:first-child{
                         width: 60px;
                         color: #666666;

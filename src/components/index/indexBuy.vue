@@ -4,7 +4,7 @@
       <div class="back" @click="back"><img src="../../../static/images/icon/back-s.png" alt=""></div>
       <h3 class="xiangiqng">填写订单</h3>
     </div>
-    <div class="site" @click="site">
+    <div class="site" @click="site" v-if="isAddress">
       <div class="siteicon">
         <van-icon name="location" color="#201cfa" size="30px"></van-icon>
       </div>
@@ -13,20 +13,31 @@
         <p class="usestie">{{address.usesite}}</p>
         <p class="usestie">{{address.phone}}</p>
       </div>
-      <van-icon name="arrow" color="#201cfa" size="20px"></van-icon>
+      <van-icon name="arrow" color="#201cfa" size="20px" style="padding-left: 25%"></van-icon>
     </div>
+
+    <div class="site" @click="site" style="text-align: center;" v-else="isAddress">
+
+      <div class="siteicon" style="margin-left: 20%">
+        <van-icon name="location" color="#201cfa" size="30px"></van-icon>
+      </div>
+      <div class="buyuse">
+        <p class="usename">添加收获地址</p>
+      </div>
+    </div>
+
     <div class="shopbuy">
       <div class="shopbuys">
         <div class="shopimg">
-          <img :src="shopitem.listShop.thumb" alt="">
+          <img :src="listShop.thumb" alt="">
       </div>
-        <p class="shopjs">{{shopitem.listShop.description}}</p>
+        <p class="shopjs">{{listShop.description}}</p>
       </div>
       <div class="purchase">
         <p>采购数量</p>
         <div class="purchaseNum">
           <div class="min" @click="min">-</div>
-          <span class="num">{{shopitem.purchase}}</span>
+          <span class="num">{{purchase}}</span>
           <div class="add" @click="add">+</div>
         </div>
       </div>
@@ -73,6 +84,9 @@ export default {
       credit_5:0,
       time : 3,
       payType:'credit_1',
+      isAddress:false,
+      purchase:1,
+      listShop:'',
       address: {
           usename: '',
           usesite: '',
@@ -83,10 +97,28 @@ export default {
   }
   },
   created ()  {
-    this.shopitem = this.$route.query.item
-    console.log(this.shopitem)
-    this.payMoney = this.shopitem.listShop.price * this.shopitem.purchase;
-    this.num = this.shopitem.purchase
+    //this.shopitem = this.$route.query.item
+    this.shopid = sessionStorage.getItem('shop')
+    this.purchase = sessionStorage.getItem('purchase')
+    console.log(this.shopid)
+    //this.payMoney = this.shopitem.listShop.price * this.shopitem.purchase;
+    this.num = sessionStorage.getItem('purchase')
+
+    this.$axios.fetchPost('/portal/SimpleShop',
+      {
+        source: "web",
+        version: "v1",
+        module: "Goods",
+        interface: "1001",
+        data: {id:this.shopid}
+      }).then(res => {
+      if(res.success){
+        this.listShop = res.data
+        this.images = res.data.slides
+      }
+    })
+
+
 
 
     this.$axios.fetchPost('/portal/SimpleShop',
@@ -96,18 +128,19 @@ export default {
         module: "Order",
         interface: "1000",
         // data: {page:this.page,lastId:this.lastId}
-        data:{goodsId: this.shopitem.listShop.id,num:this.num}
+        data:{goodsId: this.shopid ,num:this.num}
       }).then(res => {
       console.log(res)
       if (res.success) {
         this.payMoney = res.data.amount;
         this.num = this.num;
         this.credit_1 = res.data.credit_1;
-        this.credit_2 = res.data.credit_2;
+        this.credit_5 = res.data.credit_5;
         this.payMoney = res.data.amount;
       }
     })
     if(this.shopitem.address){
+      this.isAddress = true;
       this.address.username = this.shopitem.address.name;
       this.address.phone = this.shopitem.address.mobile;
       this.address.usesite = this.shopitem.address.address;
@@ -122,13 +155,19 @@ export default {
           // data: {page:this.page,lastId:this.lastId}
           data:{id: this.orderid}
         }).then(res => {
-        console.log(res)
-        if(res.success){
-          this.address.username = res.data.address.name;
-          this.address.phone = res.data.address.mobile;
-          this.address.usesite = res.data.address.address;
-          this.addressId = res.data.address.id;
-        }
+          if(res.data.exists){
+            console.log(res)
+            if(res.success){
+              this.address.username = res.data.address.name;
+              this.address.phone = res.data.address.mobile;
+              this.address.usesite = res.data.address.address;
+              this.addressId = res.data.address.id;
+              this.isAddress = true;
+            }
+
+          }
+
+
       })
     }
 
@@ -136,7 +175,9 @@ export default {
   methods: {
 
     back () {
-      this.$router.go(-1)
+      this.$router.push({
+        path: '/indexShop',
+      })
     },
     site () {
         this.$router.push({
@@ -156,26 +197,27 @@ export default {
           module: "Order",
           interface: "1000",
           // data: {page:this.page,lastId:this.lastId}
-          data:{goodsId: this.shopitem.listShop.id,num:num}
+          data:{goodsId:  this.shopid,num:num}
         }).then(res => {
         console.log(res)
         if(res.success){
           this.payMoney = res.data.amount;
           this.num = num
+          sessionStorage.setItem('purchase' , num)
         }
       })
     },
     min () {
-      if (this.shopitem.purchase === 0) {
+      if (this.purchase === 0) {
         return false
       } else {
-        this.shopitem.purchase = this.shopitem.purchase - 1;
-        this.changePrice(this.shopitem.purchase);
+        this.purchase = this.purchase - 1;
+        this.changePrice(this.purchase);
       }
     },
     add () {
-      this.shopitem.purchase = this.shopitem.purchase + 1
-      this.changePrice(this.shopitem.purchase);
+      this.purchase = parseInt(this.purchase) + parseInt(1)
+      this.changePrice(this.purchase);
     },
     way (type){
       if(type == 'bat'){
@@ -195,7 +237,7 @@ export default {
           module: "Order",
           interface: "1001",
           // data: {page:this.page,lastId:this.lastId}
-          data:{goodsId: this.shopitem.listShop.id,num:this.num,addressId: this.addressId,creditType:this.payType}
+          data:{goodsId: this.shopid,num:this.num,addressId: this.addressId,creditType:this.payType}
         }).then(res => {
         console.log(res)
         if(res.success){

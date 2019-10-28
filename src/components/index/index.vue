@@ -89,24 +89,9 @@ export default {
 
             }
         })
-        this.$axios.fetchPost('/portal',
-        {
-            source: "web",
-            version: "v1",
-            module: "Content",
-            interface: "4004",
-            data: {}
-        }).then(res => {
-            // let text = ''
-            // res.data.forEach((element, index) => {
-            //     text += index+1 +'.' + element.title + '      '
-            // });
-            // console.log()
-            if(res.success) this.text = res.data[0].title
-            
-        })
+
         
-        this.$axios.fetchPost('/portal',
+        /*this.$axios.fetchPost('/portal',
         {
             source: "web",
             version: "v1",
@@ -120,7 +105,7 @@ export default {
             // console.log()
             if(res.success) this.rateObj = res.data
             
-        })
+        })*/
     },
     methods : {
         listShop (item) {

@@ -15,10 +15,9 @@
             </div>
             <div class='money' v-if='$route.query.type == 1'>
                 <!-- {{$route.query.creditValue}} -->
-                {{rules.total_ofc}}
+                {{money}}
             </div>
             <div class='money' v-else>
-                <!-- {{$route.query.creditValue}} -->
                 {{rules.total_usdt}}
             </div>
             <div class='title'>
@@ -27,10 +26,21 @@
             </div>
             <!-- <InputImg  :placeholder='placeNum' @changeInp='changeVal' :value='user' > -->
             <div class='inputBox'>
-                <input type="number" v-model="num" placeholder="请输入兑换数量">
+                <input type="number" v-model="num" placeholder="请输入兑换数量" @blur="changeMoney">
             </div>
+
+          <div class='title'>
+            <div class="g"></div>
+            安全密码
+          </div>
+          <!-- <InputImg  :placeholder='placeNum' @changeInp='changeVal' :value='user' > -->
+          <div class='inputBox'>
+            <input type="password" v-model="password" placeholder="请输入二级密码">
+          </div>
+
+
             <div class='remarks'>
-                备注：usdt兑换ofc比例为1 ：{{rules.toUsdt}}
+                备注：{{rules.statement}}
             </div>
             <!-- <div class='cell'>
                 <div>手续费</div>
@@ -42,9 +52,9 @@
             </div> -->
             <div class="cell">
                 <div>实际到账</div>
-                <div class='overText'>{{aNum[2]}}</div>
+                <div class='overText'>{{payMoney}}BAT</div>
             </div>
-            <div class='btn'  @click='isPop '>
+            <div class='btn'  @click='submit '>
                 兑换
             </div>
         </div>
@@ -54,8 +64,7 @@
         show-cancel-button
         @confirm='submit'
         >
-        <van-field v-model="password" type='password' placeholder="请输入支付密码" />
-        <!-- <img src="https://img.yzcdn.cn/vant/apple-3.jpg"> -->
+        <van-field v-model="password" type='password' placeholder="请输入支付密码" style="background: #fff;"/>
         </van-dialog>
     </div>
 </template>
@@ -72,7 +81,9 @@ export default {
             num: '',
             rules: '',
             password: '',
-            title: '可用积分'
+            title: '可用积分',
+          money:0.00,
+          payMoney:0.00
         }
     },
     created () {
@@ -86,13 +97,31 @@ export default {
             source: "web",
             version: "v1",
             module: "Finance",
-            interface: "4004",
+            interface: "4000",
             data: {}
         }).then(res => {
             if(res.success){
-                this.rules = res.data
+                this.rules = res.data.params['credit_5-credit_1']
+              console.log(this.rules)
             }
         })
+
+      this.$axios.fetchPost('/portal',
+        {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1000",
+          data: {}
+        }).then(res => {
+        console.log(res.data)
+        if(res.success){
+          this.money= res.data.credit_5.value;
+        }else{
+          Toast(res.message)
+        }
+      })
+
     },
     computed: {
         aNum (){
@@ -104,6 +133,9 @@ export default {
         }
     },
     methods: {
+      changeMoney () {
+        this.payMoney =  this.num * this.rules.rate;
+      },
         onClickLeft () {
             this.$router.go(-1)
         },
@@ -116,29 +148,28 @@ export default {
             this.password = ""
         },
         submit () {
+
+          if(this.num == ''){
+            this.$toast('请输入兑换数量')
+            return
+          }
+
             // this.show = true
             if(this.password.length != 6) {
                 this.$toast('支付密码六位组成')
                 return 
-            }
-            var type = 'credit_2'
-            var code = '4007'
-            if( this.$route.query.type == 2){
-                type = 'credit_1'
-                code = '4009'
             }
             this.$axios.fetchPost('/portal',
             {
                 source: "web",
                 version: "v1",
                 module: "Finance",
-                interface: code,
-                data: {num: this.num,type: type,safeword: this.password}
+                interface: 4001,
+                data: {fromCredit:'credit_5',toCredit:'credit_1',amount: this.num,safeword: this.password}
             }).then(res => {
-                // this.$router.push('/conversion')
                 if(res.success){
-                    this.rules.total_ofc = (this.rules.total_ofc  - this.num*10).toFixed(8)
-                    this.rules.total_usdt = (this.rules.total_usdt  - this.num/10).toFixed(8)
+                    //this.rules.total_ofc = (this.rules.total_ofc  - this.num*10).toFixed(8)
+                    //this.rules.total_usdt = (this.rules.total_usdt  - this.num/10).toFixed(8)
                     this.num = ''
                     Dialog.alert({
                         title: '提示',
@@ -238,7 +269,7 @@ export default {
                 line-height: 32px;
                 width: 343px;
                 font-size: 23px;
-                color: #333;
+                color: #fff;
                 margin: 5px auto 38px;
             }
             

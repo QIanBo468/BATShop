@@ -78,7 +78,10 @@ export default {
   },
   methods: {
     back () {
-      this.$router.go(-1)
+      //this.$router.go(-1)
+      this.$router.push({
+        path: '/index',
+      })
     },
     add () {
       this.purchase = this.purchase + 1;
@@ -93,9 +96,12 @@ export default {
     },
     indexbuy () {
       const item = {
-        listShop: this.orderShop,
+        listShop: this.listShop,
         purchase: this.purchase,
       }
+
+      sessionStorage.setItem('purchase' , this.purchase)
+
       console.log(item)
       this.$router.push({
         path: '/indexBuy',

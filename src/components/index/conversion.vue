@@ -19,7 +19,7 @@
                     <ul>
                         <li>
                             <div>兑换数量</div>
-                            <div>{{item.usdt}}</div>
+                            <div>{{item.money}}</div>
                         </li>
                         <li>
                             <div>提交时间</div>
@@ -35,7 +35,7 @@
                         </li> -->
                         <li>
                             <div>到账数量</div>
-                            <div class='red'>{{item.final}}</div>
+                            <div class='red'>{{item.realMoney}}BAT</div>
                         </li>
                     </ul>
                 </div>
@@ -62,30 +62,45 @@ export default {
         },
         onLoad () {
             var type = 1
-            if(this.$route.query.type == 2) {
-                type = 2
-            }
-            if (this.lastPage && this.lastPage < this.page) {
-                this.finished = true
-                this.loading = false;
-                console.log(123)
-            }else{
+          var lastid = ''
+          if (this.lastId) {
+            lastid = this.lastId
+          } else {
+            lastid = 0
+          }
+          var page = this.page++
+
+              setTimeout(() => {
+
                 this.$axios.fetchPost('/portal',
                 {
                     source: "web",
                     version: "v1",
                     module: "Finance",
-                    interface: "4008",
-                    data: {lastId: this.lastId,page: this.page ++,type: type}
+                    interface: "4002",
+                    data: { lastId: lastid,page: page,fromCredit: 'credit_5',toCredit:'credit_1'}
                 }).then(res => {
                     if(res.success){
-                        this.lastPage = res.data.lastPage
-                        this.lastId = res.data.lastId
-                        this.loading = false;
-                        this.list = this.list.concat(res.data.list)
+                      if (res.data.list.length == 0) {
+                        this.finished = true
+                      } else {
+                        var ret = res.data.list
+                        this.tjnum = res.data.total;
+                        if (page == 1) {
+                          this.list = ret
+                        } else {
+                          for (var x in ret) {
+                            this.list.push(ret[x])
+                          }
+                        }
+                      }
+                    }else {
+                      this.finished = true
                     }
+                  this.loading = false
                 })
-            }
+              }, 500)
+
         }
     }
 }
@@ -121,7 +136,7 @@ export default {
                     font-size: 12px;
                     display: flex;
                     margin-bottom: 5px;
-                    color: #fff;
+                    color: #000;
                     div:first-child{
                         width: 60px;
                         color: #666666;

@@ -11,7 +11,6 @@
             <div class='usdt'>
                 <img :src="typeImg" alt="">
                 {{type}}
-                <!-- <img class="imgDown" src="../../../static/images/index/pullDown.png" alt=""> -->
             </div>
             <div class='money'>
                 {{money}}
@@ -27,6 +26,7 @@
                     placeholder="请输入转账数量"
                     :border="false"
                     name="amount"
+                    @blur="changeMoeny"
                     v-model="form.amount"
                     :error="errors.has('amount')"
                     v-validate="'required'"
@@ -54,13 +54,13 @@
                 />
                 <div class='red time' @click='time'>{{codeText}}</div>
             </div>
-            <div class='cell' v-if='radio == "ofc"'>
+            <div class='cell' >
                 <div>手续费</div>
-                <div class='overText'>{{count.fee}}</div>
+                <div class='overText'>{{fee}}%</div>
             </div>
-            <div class="cell" v-if='radio == "ofc"'>
-                <div>爱心基金</div>
-                <div class='overText'>{{count.love}}</div>
+            <div class="cell" >
+                <div>实际支付金额</div>
+                <div class='overText'>{{payMoney}}BAT</div>
             </div>
             <div class='btn' @click="submit">
                 转账
@@ -99,7 +99,7 @@ export default {
             placesNum: '请输入转账数量',
             placesCode: '请输入验证码',
             codeText: '获取验证码',
-            hintPhone: '(133****5332)',
+            hintPhone: '',
             codeTime: 60,
             show: false,
             radio: 1,
@@ -118,7 +118,9 @@ export default {
                 BAT: './static/images/index/B@3x.png',
                 LoveFund:'./static/images/index/fund.png'
             },
-            procedure: ''
+            procedure: '',
+          fee:0.00,
+          payMoney:0.00
         }
     },
     created () {
@@ -132,23 +134,21 @@ export default {
         this.radio = this.type
         
         this.getInfo()
-
-        this.$axios.fetchPost('/portal',
-                {
-                    source: "web",
-                    version: "v1",
-                    module: "Finance",
-                    interface: "2000",
-                    data: {}
-                }).then(res => {
-                    console.log(res.data)
-                    if(res.success){
-                        
-                        this.procedure = res.data
-                    }else{
-                        Toast(res.message)
-                    }
-                })
+      this.$axios.fetchPost('/portal',
+        {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1000",
+          data: {}
+        }).then(res => {
+        console.log(res.data)
+        if(res.success){
+          this.money= res.data.credit_1.value;
+        }else{
+          Toast(res.message)
+        }
+      })
     },
     computed : {
         count () {
@@ -159,13 +159,16 @@ export default {
         }
     },
     methods : {
+      changeMoeny () {
+        this.payMoney =  this.form.amount * (100+this.fee)/100;
+      },
         getInfo () {
             this.$axios.fetchPost('/portal',
             {
                 source: "web",
                 version: "v1",
                 module: "Finance",
-                interface: "2000",
+                interface: "4000",
                 data: {}
             }).then(res => {
                 console.log(res);
@@ -173,12 +176,11 @@ export default {
                 if(res.success){
                     this.list = res.data
                     var obj =  ''
-                    if(this.type == '爱心基金') {
-                        obj = 'LoveFund'
-                    }else{
-                        obj = this.type
-                    }
-                    this.money = res.data[obj].have
+                   if(this.type=='BAT'){
+                      obj = 'credit_1-credit_2'
+                   }
+                   this.fee = res.data.params[obj].feeRate;
+
                 }
             })
         },
@@ -217,9 +219,9 @@ export default {
                 {
                     source: "web",
                     version: "v1",
-                    module: "Finance",
-                    interface: "3003",
-                    data: {id: that.form.id}
+                    module: "Utils",
+                    interface: "1004",
+                    data: {template:'cd30137d348c3fd570f6763a9063a117'}
                 }).then(res => {
                     this.disabled = false
                     if(res.success){
@@ -259,9 +261,9 @@ export default {
                         source: "web",
                         version: "v1",
                         module: "Finance",
-                        interface: 2001,
+                        interface: 4001,
                         // data: that.form
-                        data: {creditType: 'credit_1', account}
+                        data: {fromCredit: 'credit_1',toCredit:'credit_2', amount:that.form.amount,captcha:that.form.captcha}
                     }).then(res => {
                         console.log(res);
                         
@@ -366,7 +368,7 @@ export default {
                 line-height: 32px;
                 width: 343px;
                 font-size: 23px;
-                color: #333;
+                color: #fff;
                 margin: 5px auto 38px;
             }
             .van-cell{
@@ -425,7 +427,7 @@ export default {
             .cell{
                 height: 18px;
                 line-height: 18px;
-                color: #666;
+                color: #aaa;
                 display: flex;
                 justify-content: space-between;
                 margin-top: 10px;
