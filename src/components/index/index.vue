@@ -276,7 +276,7 @@ export default {
         .notice{
             display: flex;
             height: 20px;
-            justify-content: center;
+            /*justify-content: center;*/
             align-items: center;
             padding: 10px;
             color: #eee;
@@ -308,8 +308,8 @@ export default {
         justify-content: space-around;
         flex-wrap: wrap;
         width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
+        /*padding-left: 15px;
+        padding-right: 15px;*/
         letter-spacing:1px;
         .lsit{
             box-sizing: border-box;
