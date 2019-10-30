@@ -22,7 +22,7 @@
         <van-icon name="location" color="#201cfa" size="30px"></van-icon>
       </div>
       <div class="buyuse">
-        <p class="usename">添加收获地址</p>
+        <p class="usename">添加收货地址</p>
       </div>
     </div>
 
@@ -75,8 +75,8 @@ export default {
   data () {
     return {
       shopitem: {},
-      imgsrc: '../../../static/images/index/xuanze.png',
-      imgsrc1: '../../../static/images/index/xuanze(4).png',
+      imgsrc: require('../../../static/images/index/xuanze.png'),
+      imgsrc1: require('../../../static/images/index/xuanze(4).png'),
       buyway: 0, // 0 为bat  1 为积分
       orderid: 1,
       payMoney:0,
@@ -230,6 +230,12 @@ export default {
     },
     submit () {
       console.log(this.addressId);
+
+      if(!this.addressId){
+        Toast('收获地址不能为空！')
+        return false;
+      }
+
       this.$axios.fetchPost('/portal/SimpleShop',
         {
           source: "web",

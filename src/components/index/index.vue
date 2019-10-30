@@ -3,21 +3,29 @@
         <div class="shoptitle">
             <h2>{{title}}</h2>
         </div>
-        <div class="shopimg">
-            <img src="../../assets/shopimg_index/banner.png" alt="BAT商城">
+   <div class="zhanshitu">
+
+          <van-swipe :autoplay="3000" style="width: 100%">
+            <van-swipe-item v-for="(image, index) in images" :key="index">
+              <img v-lazy="image.src" style="width: 100%;height: 100%" />
+            </van-swipe-item>
+          </van-swipe>
+   </div>
+   <div class="shopimg">
+            <!--<img src="../../assets/shopimg_index/banner.png" alt="BAT商城">-->
         </div>
         <div class="shopmore">
             <div class="notice">
                 <img style="float: left;" src="../../assets/shopimg_index/tz.png" alt="">
                 <p>{{bannerAd}}</p>
             </div>
-            <div class="more">
+            <div class="more" @click="moreNotice">
                 <img src="../../assets/shopimg_index/shopmore.png" alt="">
             </div>
         </div>
         <div class="shoplist">
             <div class="lsit" v-for="item of commodity" :key="item.id" @click="listShop(item)">
-                <div class="listimg">
+                <div class="listimg" style="height: 100%">
                     <img v-bind:src="item.thumb" alt="" style="width: 100%;height: 100%;">
                     <!-- <img src="../../assets/shopimg_index/kuangji.png" alt=""> -->
                 </div>
@@ -46,6 +54,7 @@ export default {
           lastId:0,
           cpage:0,
           clastId:0,
+          images:'',
           commodity: [
 
             ]
@@ -57,6 +66,8 @@ export default {
     mounted() {
     },
     created () {
+
+    this.getGd();
 
       this.page = this.page +1;
       this.$axios.fetchPost('/portal/SimpleShop',
@@ -108,6 +119,27 @@ export default {
         })*/
     },
     methods : {
+
+      moreNotice(){
+        this.$router.push('./notice');
+      },
+
+      //获取轮播图
+
+      getGd(){
+        this.$axios.fetchPost('/portal',
+          {
+            source: "web",
+            version: "v1",
+            module: "Content",
+            interface: "1000",
+          }).then(res => {
+          if(res.success) this.images = res.data.list
+
+        })
+      },
+
+
         listShop (item) {
 
             console.log(item)
@@ -208,6 +240,20 @@ export default {
 
 </style>
 <style lang="less" scoped>
+
+  .zhanshitu{
+    background: #1d1e3d;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  img{
+    width: 40%;
+  }
+  }
+
 #index{
     width: 100%;
     height: 100%;

@@ -10,7 +10,7 @@
                 {{obj.title}}
             </div>
             <div class='remarks'>{{obj.time}}</div>
-            <div v-html="obj.content" style="font-size: 14px;width: 343px;color:rgba(102,102,102,1);margin: 0 auto;line-height:30px;text-indent: 2em;letter-spacing: .6px">
+            <div v-html="obj.content" style="font-size: 14px;width: 343px;color:rgba(244,244,244,1);margin: 0 auto;line-height:30px;text-indent: 2em;letter-spacing: .6px">
             </div>
         </div>
     </div>
@@ -50,29 +50,48 @@ export default {
     }
 </style>
 <style lang="less" scoped>
+
+  .van-nav-bar{
+    background: #000;
+    color: #fff;
+  }
+  #extract .van-nav-bar .van-nav-bar__text{
+    color: #fff;
+  }
+  .van-nav-bar .van-icon{
+    color:#fff;
+  }
+  .van-nav-bar__title{
+    color:#fff;
+  }
+
+  #app{
+    background: #0b0c21;
+  }
     .noticeDetails{
         width: 100%;
         height: 100%;
+      background: #0b0c21;
         display: flex;
         flex-direction: column;
         .box{
             flex: 1;
             overflow: scroll;
-            border-top: 10px solid #f6f6f6;
+
             padding: 10px 16px 0;
             
             .title{
                 font-size: 14px;
                 font-weight: 600;
                 text-align: center;
-                color: #333333;
+                color: #aaa;
                 height: 21px;
                 line-height: 21px;
                 margin-bottom: 5px;
             }
             .remarks{
                 font-size: 12px;
-                color: #999;
+                color: #fff;
                 text-align: right;
                 margin-bottom: 5px;
             }

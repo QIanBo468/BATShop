@@ -257,13 +257,13 @@ export default {
         height: 100%;
         li{
             font-size: 14px;
-            color: #666666;
+            color: #aaa;
             height: 20px;
             line-height: 20px;
         }
         li:last-child{
             font-size: 11px;
-            color: #999999;
+            color: #fff;
             height: 16px;
             margin-top: 5px;
             line-height: 16px;

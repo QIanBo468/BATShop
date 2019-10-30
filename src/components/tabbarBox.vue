@@ -49,7 +49,7 @@ export default {
         return {
             active: 0,
             icon: {
-                active: './static/images/index/dating@3x.png/',
+                active: './static/images/index/dating@3x.png',
                 normal: './static/images/index/dating-s@3x.png',
             },
             mall: {

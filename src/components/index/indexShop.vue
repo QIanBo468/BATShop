@@ -154,11 +154,11 @@ export default {
     }
     .zhanshi{
       width: 100%;
-      height: 35%;
+
       .zhanshitu{
         background: #1d1e3d;
         width: 100%;
-        height: 80%;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -185,7 +185,7 @@ export default {
       width: 100%;
       height: 40px;
       margin: 20px;
-      background: #1d1e3d;
+
       box-sizing: border-box;
       font-size: 14px;
       padding: 0 10px;

@@ -3,7 +3,7 @@
     <van-nav-bar title="邀请好友" left-arrow @click-left="$router.go(-1)" :border="false" />
     <div class="main">
       <div class="title">
-        <h2>ofc邀请您注册及下载</h2>
+        <h2>BAT邀请您注册及下载</h2>
         <div>
           <span>邀请人：{{info.nickname}}</span>
           <span>ID:{{info.id}}</span>
@@ -17,7 +17,7 @@
         </div>
         <div class="bottom">
           <!-- <img :src="qrcode" alt /> -->
-          <qrCode></qrCode>
+          <qrCode :qrcode="qrcode"></qrCode>
           <p>长按二维码识别</p>
           <!-- <button @click="show=true">邀请好友</button> -->
         </div>
@@ -98,7 +98,7 @@ export default {
       .then(res => {
         console.log(res)
         this.num = res.data.inviteCode
-        this.qrcode = res.data.qrCode
+        this.qrcode = res.data.inviteUrl
         this.info = res.data
       })
   }

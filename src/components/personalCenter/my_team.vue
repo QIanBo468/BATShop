@@ -86,7 +86,7 @@ export default {
             data: {
               lastId: lastid,
               page: page,
-              floor: 0
+              floor: 1
             }
           })
           .then(res => {

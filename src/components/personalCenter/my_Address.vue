@@ -37,8 +37,8 @@ export default {
     return {
       page:0,
       lastId:0,
-      imgsrc: '../../../static/images/index/xuanze.png',
-      imgsrc1: '../../../static/images/index/xuanze(4).png',
+      imgsrc: require('../../../static/images/index/xuanze.png'),
+      imgsrc1: require('../../../static/images/index/xuanze(4).png'),
         order:[
 
       ],
@@ -88,7 +88,10 @@ export default {
              console.log(res)
              if (res.code != 1) {
                this.$toast(res.message);
-               this.order.splice(index,1)
+               this.lastId = 0;
+               this.page = 0;
+               this.get_address()
+               //this.order.splice(index,1)
              }
            })
        }).catch(() => {

@@ -235,7 +235,7 @@ export default {
     margin: 0 auto;
     height: 50px;
     display: flex;
-    background: #fff;
+    background: #1D1C3B;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
@@ -246,13 +246,13 @@ export default {
         height: 100%;
         li{
             font-size: 14px;
-            color: #666666;
+            color: #fff;
             height: 20px;
             line-height: 20px;
         }
         li:last-child{
             font-size: 11px;
-            color: #999999;
+            color: #fff;
             height: 16px;
             margin-top: 5px;
             line-height: 16px;

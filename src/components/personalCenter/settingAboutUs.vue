@@ -3,10 +3,10 @@
     <van-nav-bar title="关于我们" left-arrow class="nav-top" @click-left="back" />
 
     <div class="main">
-      <div class="logo">
+     <!-- <div class="logo">
         <img src="../../../static/images/index/logo.png" alt="ofc矿机" />
         <div class="logo-text" style="color:#fff">logo</div>
-      </div>
+      </div>-->
 
       <div class="licence">
         <h3 class="licence-head">用户注册协议</h3>

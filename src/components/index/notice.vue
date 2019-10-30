@@ -79,6 +79,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+  .van-nav-bar{
+    background: #000;
+    color: #fff;
+  }
+  #extract .van-nav-bar .van-nav-bar__text{
+    color: #fff;
+  }
+  .van-nav-bar .van-icon{
+    color:#fff;
+  }
+  .van-nav-bar__title{
+    color:#fff;
+  }
+
 .overText{
     overflow: hidden;
     text-overflow:ellipsis;
@@ -87,12 +102,12 @@ export default {
     #notice{
         width: 100%;
         height: 100%;
-        background: #F8F8F8;
+        background: #0b0c21;
         .noticeList a{
             height: 63px;
             display: flex;
             // line-height: 63px;
-            background: #fff;
+          background: #1d1e3d;
             margin-top: 10px;
             padding: 10px 16px;
             align-items: center;
@@ -103,7 +118,8 @@ export default {
                 height: 100%;
                 li{
                     font-size: 14px;
-                    color: #666666;
+
+                    color: #eee;
                     height: 20px;
                     line-height: 20px;
                     .overText

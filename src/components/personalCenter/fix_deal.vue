@@ -80,6 +80,19 @@ export default {
 
     },
     fix_pass() {
+
+      if(this.fromObj.captcha == ''){
+        this.$toast('验证码不能为空');
+        return false;
+      }
+      if(this.newPwd.length != 6){
+        this.$toast('安全密码长度必须为6位数数字');
+        return false;
+      }
+      if(this.newPwd != this.checkPwd){
+        this.$toast('安全密码不一致');
+        return false;
+      }
       this.$axios
         .fetchPost("/portal", {
           interface: "2004",
