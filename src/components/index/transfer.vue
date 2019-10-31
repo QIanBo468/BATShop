@@ -1,7 +1,7 @@
 <template>
     <div id='extract'>
         <van-nav-bar
-        title="转出到BAT交易"
+        title="转出到OTC交易"
         right-text="转账记录"
         left-arrow
         @click-left="onClickLeft"

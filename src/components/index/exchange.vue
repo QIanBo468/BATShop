@@ -41,6 +41,7 @@
 
             <div class='remarks'>
                 备注：{{rules.statement}}
+                <!-- BAT当前价格：{{rules.statement}} -->
             </div>
             <!-- <div class='cell'>
                 <div>手续费</div>
