@@ -61,7 +61,7 @@
 
     <div class="endbuy">
       <div class="jifen">
-        <p>合计:   {{payMoney}}积分</p>
+        <p>合计:   {{buyway === 0 ? payMoney.credit_1+'BAT币' : payMoney.credit_5+'积分'}}</p>
       </div>
       <div class="queren"  @click="submit">提交订单</div>
     </div>
@@ -79,7 +79,7 @@ export default {
       imgsrc1: require('../../../static/images/index/xuanze(4).png'),
       buyway: 0, // 0 为bat  1 为积分
       orderid: 1,
-      payMoney:0,
+      payMoney:{},
       credit_1:0,
       credit_5:0,
       time : 3,
