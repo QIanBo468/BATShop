@@ -1,7 +1,7 @@
 <template>
   <div class="usesite">
     <div class="routerback">
-      <div class="back" ><!--<img src="../../../static/images/icon/back-s.png" alt="">--></div>
+      <div class="back" ><!-- <img src="../../../static/images/icon/back-s.png" alt="">--></div>
       <h3 class="xiangiqng">我的收货地址</h3>
       <div class="addsite" @click="onClickRight">添加地址</div>
     </div>

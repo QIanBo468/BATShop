@@ -56,7 +56,9 @@ export default {
           clastId:0,
           images:'',
           commodity: [
-
+              {thumb:'../../assets/shopimg_index/kuangji.png',title:'123',description:'123123',price:'456465'},
+              {thumb:'../../assets/shopimg_index/kuangji.png',title:'123',description:'123123',price:'456465'},
+              {thumb:'../../assets/shopimg_index/kuangji.png',title:'123',description:'123123',price:'456465'},
             ]
         }
     },
@@ -78,6 +80,7 @@ export default {
           interface: "1000",
           data: {page:this.page,lastId:this.lastId}
         }).then(res => {
+            console.log(res)
         if(res.success){
           this.page = res.data.currentPage;
           this.lastId = res.data.lastId;
@@ -96,7 +99,7 @@ export default {
             data: {page:this.cpage,lastId:this.clastId}
         }).then(res => {
             if(res.success){
-                this .bannerAd = res.data.list[0].title;
+                this.bannerAd = res.data.list[0].title;
 
             }
         })
@@ -305,17 +308,18 @@ export default {
     }
     .shoplist{
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
         flex-wrap: wrap;
         width: 100%;
         /*padding-left: 15px;
         padding-right: 15px;*/
         letter-spacing:1px;
+        padding-left: 15px;
         .lsit{
             box-sizing: border-box;
             height: 200px;
             width: 45%;
-            margin-top: 10px;
+            margin: 5px 5px;
             // padding-left: 10px;
             background: #212243;
             display: flex;

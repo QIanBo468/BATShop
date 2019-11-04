@@ -75,10 +75,10 @@ export default {
                     data: that.obj
                 }).then(res => {
                     if (res.success) {
-                        that.$cookies.set('status', res.data.status)
+                    localStorage.setItem('status', res.data.status)
                         that.userInfo = res.data
                         //that.$cookies.set('accessToken', res.data.tokenType + " " + res.data.accessToken , res.data.expiresIn)
-                      sessionStorage.setItem('accessToken', res.data.tokenType + " " + res.data.accessToken , res.data.expiresIn)
+                      localStorage.setItem('accessToken', res.data.tokenType + " " + res.data.accessToken , res.data.expiresIn)
                         // if(confirm('是否直接进入')){
                         //     that.$router.push('/index')
                         // }else{
